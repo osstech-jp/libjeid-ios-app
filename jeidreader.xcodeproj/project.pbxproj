@@ -12,8 +12,8 @@
 		3E5A6B5323068EBE00B9D674 /* DLReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */; };
 		3E5A6B57230691D900B9D674 /* DLReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */; };
 		3ECCFC412306AF7C00855D56 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCFC402306AF7C00855D56 /* WebViewController.swift */; };
-		FB48F1B82334F25D0044FE8C /* libjeid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB48F1B72334F25D0044FE8C /* libjeid.framework */; };
-		FB48F1B92334F29E0044FE8C /* libjeid.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB48F1B72334F25D0044FE8C /* libjeid.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB6B993C2344C5EA0038E93A /* libjeid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB6B993A2344C5750038E93A /* libjeid.framework */; };
+		FB6B993D2344C5EA0038E93A /* libjeid.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB6B993A2344C5750038E93A /* libjeid.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBB68B3822F4267A00042971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3722F4267A00042971 /* AppDelegate.swift */; };
 		FBB68B3A22F4267A00042971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3922F4267A00042971 /* SceneDelegate.swift */; };
 		FBB68B3C22F4267A00042971 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3B22F4267A00042971 /* MainViewController.swift */; };
@@ -29,7 +29,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FB48F1B92334F29E0044FE8C /* libjeid.framework in Embed Frameworks */,
+				FB6B993D2344C5EA0038E93A /* libjeid.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,7 +43,7 @@
 		3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLReaderViewController.swift; sourceTree = "<group>"; };
 		3ECCFC402306AF7C00855D56 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FB481A0C22F45ACC003865D3 /* jeidreader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jeidreader.entitlements; sourceTree = "<group>"; };
-		FB48F1B72334F25D0044FE8C /* libjeid.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjeid.framework; sourceTree = "<group>"; };
+		FB6B993A2344C5750038E93A /* libjeid.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjeid.framework; sourceTree = "<group>"; };
 		FBB68B3422F4267A00042971 /* jeidreader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeidreader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB68B3722F4267A00042971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBB68B3922F4267A00042971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,19 +59,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB48F1B82334F25D0044FE8C /* libjeid.framework in Frameworks */,
+				FB6B993C2344C5EA0038E93A /* libjeid.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FB4819F922F459D1003865D3 /* Frameworks */ = {
+		FB6B99372344C5080038E93A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FB48F1B72334F25D0044FE8C /* libjeid.framework */,
+				FB6B993A2344C5750038E93A /* libjeid.framework */,
 			);
-			name = Frameworks;
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		FBB68B2B22F4267A00042971 = {
@@ -80,7 +80,7 @@
 				FB481A0C22F45ACC003865D3 /* jeidreader.entitlements */,
 				FBB68B3622F4267A00042971 /* app */,
 				FBB68B3522F4267A00042971 /* Products */,
-				FB4819F922F459D1003865D3 /* Frameworks */,
+				FB6B99372344C5080038E93A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,7 +332,7 @@
 				DEVELOPMENT_TEAM = FC89S46DN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -357,7 +357,7 @@
 				DEVELOPMENT_TEAM = FC89S46DN3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = app/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
