@@ -13,7 +13,6 @@
 		3E5A6B57230691D900B9D674 /* DLReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */; };
 		3ECCFC412306AF7C00855D56 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCFC402306AF7C00855D56 /* WebViewController.swift */; };
 		FB6B993C2344C5EA0038E93A /* libjeid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB6B993A2344C5750038E93A /* libjeid.framework */; };
-		FB6B993D2344C5EA0038E93A /* libjeid.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB6B993A2344C5750038E93A /* libjeid.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FBB68B3822F4267A00042971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3722F4267A00042971 /* AppDelegate.swift */; };
 		FBB68B3A22F4267A00042971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3922F4267A00042971 /* SceneDelegate.swift */; };
 		FBB68B3C22F4267A00042971 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3B22F4267A00042971 /* MainViewController.swift */; };
@@ -29,7 +28,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FB6B993D2344C5EA0038E93A /* libjeid.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
