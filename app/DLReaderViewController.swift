@@ -169,6 +169,8 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
                         session.invalidate(errorMessage: "\(msgErrorHeader)認証失敗(暗証番号1)")
                         self.handleInvalidPinError(jeidError, 1)
                         return
+                    default:
+                        throw jeidError
                     }
                 }
 
@@ -181,6 +183,8 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
                             session.invalidate(errorMessage: "\(msgErrorHeader)認証失敗(暗証番号2)")
                             self.handleInvalidPinError(jeidError, 2)
                             return
+                        default:
+                            throw jeidError
                         }
                     }
                 }
