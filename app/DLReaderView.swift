@@ -24,6 +24,7 @@ class DLReaderView: UIView {
         let screenWidth = UIScreen.main.bounds.size.width
         let screenHeight = UIScreen.main.bounds.size.height
         let textSize = CGFloat(min(screenWidth, screenHeight) / 18)
+        let textFieldHeight = CGFloat(min(screenWidth, screenHeight) / 12)
         let logTextSize = CGFloat(min(screenWidth, screenHeight) / 24)
         let buttonLabelSize = CGFloat(min(screenWidth, screenHeight) / 16)
         let stackViewSpacing = CGFloat(min(screenWidth, screenHeight) / 40)
@@ -66,6 +67,8 @@ class DLReaderView: UIView {
         pin1Field.layer.borderWidth = 1
         pin1Field.isSecureTextEntry = true
         pin1Field.keyboardType = UIKeyboardType.numberPad
+        pin1Field.translatesAutoresizingMaskIntoConstraints = false
+        pin1Field.heightAnchor.constraint(equalToConstant: CGFloat(textFieldHeight + pin1Field.layer.borderWidth * 2)).isActive = true
 
         pin2Field = UITextField()
         pin2Field.textColor = CustomColor.textFieldText
@@ -76,6 +79,8 @@ class DLReaderView: UIView {
         pin2Field.layer.borderWidth = 1
         pin2Field.isSecureTextEntry = true
         pin2Field.keyboardType = UIKeyboardType.numberPad
+        pin2Field.translatesAutoresizingMaskIntoConstraints = false
+        pin2Field.heightAnchor.constraint(equalToConstant: CGFloat(textFieldHeight + pin2Field.layer.borderWidth * 2)).isActive = true
 
         startButton = UIButton(type: .system)
         startButton.setTitle("読み取り開始", for: .normal)

@@ -20,6 +20,7 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
     var previousKeyboardHeight: CGFloat!
     var previousScreenSize: CGSize!
     var session: NFCTagReaderSession?
+    private var keyboardIsClosed: Bool = true
     private var pin1: String?
     private var pin2: String?
 
@@ -62,11 +63,15 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         let newStr: NSString = currentStr.replacingCharacters(in: range, with: string) as NSString
         return newStr.length <= MAX_PIN_LENGTH
     }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.view.layoutIfNeeded()
-        activeField = textField
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        keyboardIsClosed = true
         return true
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
+        keyboardIsClosed = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,20 +106,25 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
             }
             scrollView.contentSize.height += keyboardHeight - previousKeyboardHeight
             previousKeyboardHeight = keyboardHeight
-            previousScreenSize = self.view.bounds.size        }
+            previousScreenSize = self.view.bounds.size
+        }
     }
 
     @objc func keyboardWillHide(_ notification: Notification?) {
         print("keyboardWillHide")
+        if !keyboardIsClosed {
+            previousKeyboardHeight = CGFloat(0)
+            return
+        }
         if let _ = activeField {
             let keyboardFrameEnd = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
             let keyboardHeight = keyboardFrameEnd.size.height
             if (self.view.bounds.size.equalTo(previousScreenSize)) {
                 scrollView.contentSize.height -= keyboardHeight
             }
+            previousKeyboardHeight = CGFloat(0)
+            activeField = nil
         }
-        previousKeyboardHeight = CGFloat(0)
-        activeField = nil
     }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
