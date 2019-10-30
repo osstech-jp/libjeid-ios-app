@@ -20,88 +20,29 @@ class DLReaderView: UIView {
     }
 
     override init(frame: CGRect) {
-
-        let screenWidth = UIScreen.main.bounds.size.width
-        let screenHeight = UIScreen.main.bounds.size.height
-        let textSize = CGFloat(min(screenWidth, screenHeight) / 18)
-        let textFieldHeight = CGFloat(min(screenWidth, screenHeight) / 12)
-        let logTextSize = CGFloat(min(screenWidth, screenHeight) / 24)
-        let buttonLabelSize = CGFloat(min(screenWidth, screenHeight) / 16)
-        let stackViewSpacing = CGFloat(min(screenWidth, screenHeight) / 40)
-        let paddingSize = CGFloat(min(screenWidth, screenHeight) / 20)
-
-        let explanation = UITextView()
-        explanation.textColor = CustomColor.text
-        explanation.font = UIFont.systemFont(ofSize: textSize)
-        explanation.backgroundColor = CustomColor.background
-        explanation.textContainerInset = UIEdgeInsets.zero
-        explanation.isEditable = false
-        explanation.isScrollEnabled = false
+        let explanation = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         explanation.text = "読み取り開始ボタンを押下後、端末を免許証にかざしてください。\n"
                            + "暗証番号2は省略可能です。その場合、顔写真および本籍は表示されません。"
 
-        let pin1Label = UITextView()
-        pin1Label.textColor = CustomColor.text
-        pin1Label.font = UIFont.systemFont(ofSize: textSize)
-        pin1Label.backgroundColor = CustomColor.background
-        pin1Label.textContainerInset = UIEdgeInsets.zero
-        pin1Label.isEditable = false
-        pin1Label.isScrollEnabled = false
+        let pin1Label = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         pin1Label.text = "暗証番号1(4桁、必須)"
-
-        let pin2Label = UITextView()
-        pin2Label.textColor = CustomColor.text
-        pin2Label.font = UIFont.systemFont(ofSize: textSize)
-        pin2Label.backgroundColor = CustomColor.background
-        pin2Label.textContainerInset = UIEdgeInsets.zero
-        pin2Label.isEditable = false
-        pin2Label.isScrollEnabled = false
+        let pin2Label = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         pin2Label.text = "暗証番号2(4桁、任意)"
 
-        pin1Field = UITextField()
-        pin1Field.textColor = CustomColor.textFieldText
-        pin1Field.font = UIFont.systemFont(ofSize: textSize)
-        pin1Field.backgroundColor = CustomColor.textFieldBackground
-        pin1Field.borderStyle = UITextField.BorderStyle.roundedRect
-        pin1Field.layer.borderColor = CustomColor.textFieldBorder.cgColor
-        pin1Field.layer.borderWidth = 1
+        pin1Field = CustomViewUtil.createTextField(UIScreen.main.bounds.size)
         pin1Field.isSecureTextEntry = true
         pin1Field.keyboardType = UIKeyboardType.numberPad
-        pin1Field.translatesAutoresizingMaskIntoConstraints = false
-        pin1Field.heightAnchor.constraint(equalToConstant: CGFloat(textFieldHeight + pin1Field.layer.borderWidth * 2)).isActive = true
 
-        pin2Field = UITextField()
-        pin2Field.textColor = CustomColor.textFieldText
-        pin2Field.font = UIFont.systemFont(ofSize: textSize)
-        pin2Field.backgroundColor = CustomColor.textFieldBackground
-        pin2Field.borderStyle = UITextField.BorderStyle.roundedRect
-        pin2Field.layer.borderColor = CustomColor.textFieldBorder.cgColor
-        pin2Field.layer.borderWidth = 1
+        pin2Field = CustomViewUtil.createTextField(UIScreen.main.bounds.size)
         pin2Field.isSecureTextEntry = true
         pin2Field.keyboardType = UIKeyboardType.numberPad
-        pin2Field.translatesAutoresizingMaskIntoConstraints = false
-        pin2Field.heightAnchor.constraint(equalToConstant: CGFloat(textFieldHeight + pin2Field.layer.borderWidth * 2)).isActive = true
 
-        startButton = UIButton(type: .system)
+        startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
-        startButton.tintColor = CustomColor.buttonTint
-        startButton.backgroundColor = CustomColor.buttonBackground
-        startButton.titleLabel?.font = UIFont.systemFont(ofSize: buttonLabelSize)
 
-        logView = UITextView()
-        logView.textColor = CustomColor.text
-        logView.font = UIFont.systemFont(ofSize: logTextSize)
-        logView.backgroundColor = CustomColor.background
-        logView.isEditable = false
-        logView.isScrollEnabled = false
+        logView = CustomViewUtil.createLogView(UIScreen.main.bounds.size)
 
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = stackViewSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
         stackView.addArrangedSubview(pin1Label)
         stackView.addArrangedSubview(pin1Field)
@@ -118,6 +59,7 @@ class DLReaderView: UIView {
         self.backgroundColor = CustomColor.background
         self.addSubview(scrollView)
 
+        let paddingSize = CustomViewUtil.getAutoLayoutPadding(UIScreen.main.bounds.size)
         scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
                                         constant: paddingSize).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor,

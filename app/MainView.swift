@@ -19,39 +19,18 @@ class MainView: UIView {
 
     override init(frame: CGRect) {
 
-        let screenWidth = UIScreen.main.bounds.size.width
-        let screenHeight = UIScreen.main.bounds.size.height
-        let buttonLabelSize = CGFloat(min(screenWidth, screenHeight) / 16)
-        let stackViewSpacing = CGFloat(min(screenWidth, screenHeight) / 16)
-        let paddingSize = CGFloat(min(screenWidth, screenHeight) / 20)
-
-        inButton = UIButton(type: .system)
+        inButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         inButton.setTitle("マイナンバーカード", for: .normal)
-        inButton.tintColor = CustomColor.buttonTint
-        inButton.backgroundColor = CustomColor.buttonBackground
-        inButton.titleLabel?.font = UIFont.systemFont(ofSize: buttonLabelSize)
         inButton.isHidden = true
 
-        dlButton = UIButton(type: .system)
+        dlButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         dlButton.setTitle("運転免許証", for: .normal)
-        dlButton.tintColor = CustomColor.buttonTint
-        dlButton.backgroundColor = CustomColor.buttonBackground
-        dlButton.titleLabel?.font = UIFont.systemFont(ofSize: buttonLabelSize)
 
-        epButton = UIButton(type: .system)
+        epButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         epButton.setTitle("パスポート", for: .normal)
-        epButton.tintColor = CustomColor.buttonTint
-        epButton.backgroundColor = CustomColor.buttonBackground
-        epButton.titleLabel?.font = UIFont.systemFont(ofSize: buttonLabelSize)
         epButton.isHidden = true
 
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = stackViewSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
+        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(inButton)
         stackView.addArrangedSubview(dlButton)
         stackView.addArrangedSubview(epButton)
@@ -64,6 +43,7 @@ class MainView: UIView {
         self.backgroundColor = CustomColor.background
         self.addSubview(scrollView)
 
+        let paddingSize = CustomViewUtil.getAutoLayoutPadding(UIScreen.main.bounds.size)
         scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
                                         constant: paddingSize).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor,
