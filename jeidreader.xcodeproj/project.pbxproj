@@ -96,14 +96,14 @@
 			isa = PBXGroup;
 			children = (
 				FBB68B3722F4267A00042971 /* AppDelegate.swift */,
-				FBB68B3922F4267A00042971 /* SceneDelegate.swift */,
-				FBB68B4D22F43BB700042971 /* MainView.swift */,
+				3E113E7C230E8DF2001E2AEB /* CustomColor.swift */,
 				3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */,
-				FBB68B3B22F4267A00042971 /* MainViewController.swift */,
 				3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */,
 				3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */,
+				FBB68B4D22F43BB700042971 /* MainView.swift */,
+				FBB68B3B22F4267A00042971 /* MainViewController.swift */,
+				FBB68B3922F4267A00042971 /* SceneDelegate.swift */,
 				3ECCFC402306AF7C00855D56 /* WebViewController.swift */,
-				3E113E7C230E8DF2001E2AEB /* CustomColor.swift */,
 				FBB68B4022F4267B00042971 /* Assets.xcassets */,
 				3E068419230BE270002F7BB7 /* WebAssets */,
 				FBB68B4222F4267B00042971 /* LaunchScreen.storyboard */,
