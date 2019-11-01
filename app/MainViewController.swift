@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: CustomViewController {
     var mainView: MainView!
 
     override func viewDidLoad() {
@@ -20,6 +20,7 @@ class MainViewController: UIViewController {
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
 
         let wrapperView = CustomWrapperView(self.view.frame, mainView)
+        scrollView = wrapperView.scrollView
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         wrapperView.logView.isHidden = true
         self.view.addSubview(wrapperView)

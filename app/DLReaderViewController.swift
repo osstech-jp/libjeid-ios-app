@@ -10,18 +10,12 @@ import CoreNFC
 import UIKit
 import libjeid
 
-class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReaderSessionDelegate {
+class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate {
     let MAX_PIN_LENGTH: Int = 4
     var dlReaderView: DLReaderView!
-    var logView: UITextView!
-    var scrollView: UIScrollView!
     var pin1Field: UITextField!
     var pin2Field: UITextField!
-    var activeField: UITextField?
-    var previousKeyboardHeight: CGFloat!
-    var previousScreenSize: CGSize!
     var session: NFCTagReaderSession?
-    private var keyboardIsClosed: Bool = true
     private var pin1: String?
     private var pin2: String?
 
@@ -40,9 +34,8 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
         self.view.addSubview(wrapperView)
-        previousKeyboardHeight = CGFloat(0)
     }
-    
+
     @objc func pushStartButton(sender: UIButton){
         print("startButton pushed")
         self.pin1 = self.pin1Field!.text
@@ -58,7 +51,7 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         self.session?.alertMessage = "免許証に端末をかざしてください"
         self.session?.begin()
     }
-    
+
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -67,16 +60,6 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         return newStr.length <= MAX_PIN_LENGTH
     }
 
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        keyboardIsClosed = true
-        return true
-    }
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeField = textField
-        keyboardIsClosed = false
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let notificationCenter = NotificationCenter.default
@@ -94,42 +77,6 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         notificationCenter.removeObserver(self)
     }
 
-    @objc func keyboardWillShow(_ notification: Notification?) {
-        print("keyboardWillShow")
-        let keyboardFrameEnd = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let boundsSize = UIScreen.main.bounds.size
-
-        if let activeField = activeField {
-            let fieldBottom = (scrollView.frame.origin.y + activeField.frame.origin.y - scrollView.contentOffset.y)
-                            + activeField.frame.height + 10.0
-            let keyboardTop = boundsSize.height - keyboardFrameEnd.size.height
-            let keyboardHeight = keyboardFrameEnd.size.height
-            if fieldBottom >= keyboardTop {
-                scrollView.contentOffset.y += fieldBottom - keyboardTop
-            }
-            scrollView.contentSize.height += keyboardHeight - previousKeyboardHeight
-            previousKeyboardHeight = keyboardHeight
-            previousScreenSize = self.view.bounds.size
-        }
-    }
-
-    @objc func keyboardWillHide(_ notification: Notification?) {
-        print("keyboardWillHide")
-        if !keyboardIsClosed {
-            previousKeyboardHeight = CGFloat(0)
-            return
-        }
-        if let _ = activeField {
-            let keyboardFrameEnd = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-            let keyboardHeight = keyboardFrameEnd.size.height
-            if (self.view.bounds.size.equalTo(previousScreenSize)) {
-                scrollView.contentSize.height -= keyboardHeight
-            }
-            previousKeyboardHeight = CGFloat(0)
-            activeField = nil
-        }
-    }
-    
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         print("tagReaderSessionDidBecomeActive: \(Thread.current)")
     }
@@ -348,7 +295,6 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
                     self.publishLog("Subject Key Identifier: \(signatureSkiStr)")
                     dataDict["dl-signature-ski"] = signatureSkiStr
                 }
-
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
                 self.openWebView(dataDict)
@@ -356,22 +302,6 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
                 session.invalidate(errorMessage: session.alertMessage + "失敗")
                 self.publishLog("\(error)")
             }
-        }
-    }
-    
-    func clearPublishedLog() {
-        DispatchQueue.main.async {
-            self.logView.isEditable = true
-            self.logView.text = nil
-            self.logView.isEditable = false
-        }
-    }
-    
-    func publishLog(_ text: String) {
-        DispatchQueue.main.async {
-            self.logView.isEditable = true
-            self.logView.insertText(text + "\n")
-            self.logView.isEditable = false
         }
     }
 
@@ -391,18 +321,6 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
                 print(error)
                 return
             }
-        }
-    }
-
-    func openAlertView(_ title: String, _ message: String) {
-        DispatchQueue.main.async {
-            let alertController: UIAlertController
-                = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                print("alert closed")
-            }
-            alertController.addAction(okAction)
-            self.present(alertController, animated: true, completion: nil)
         }
     }
 
