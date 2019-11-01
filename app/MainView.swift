@@ -18,7 +18,6 @@ class MainView: UIView {
     }
 
     override init(frame: CGRect) {
-
         inButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         inButton.setTitle("マイナンバーカード", for: .normal)
         inButton.isHidden = true
@@ -35,27 +34,11 @@ class MainView: UIView {
         stackView.addArrangedSubview(dlButton)
         stackView.addArrangedSubview(epButton)
 
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(stackView)
-
         super.init(frame: frame)
-        self.backgroundColor = CustomColor.background
-        self.addSubview(scrollView)
-
-        let paddingSize = CustomViewUtil.getAutoLayoutPadding(UIScreen.main.bounds.size)
-        scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
-                                        constant: paddingSize).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-                                            constant: paddingSize).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-                                             constant: paddingSize * -1).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,
-                                           constant: paddingSize * -1).isActive = true
-
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        self.addSubview(stackView)
+        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 }

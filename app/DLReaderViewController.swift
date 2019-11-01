@@ -13,6 +13,7 @@ import libjeid
 class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReaderSessionDelegate {
     let MAX_PIN_LENGTH: Int = 4
     var dlReaderView: DLReaderView!
+    var logView: UITextView!
     var scrollView: UIScrollView!
     var pin1Field: UITextField!
     var pin2Field: UITextField!
@@ -28,15 +29,17 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
         super.viewDidLoad()
         self.title = "運転免許証リーダー"
         dlReaderView = DLReaderView(frame: self.view.frame)
-        dlReaderView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        scrollView = dlReaderView.scrollView
         pin1Field = dlReaderView.pin1Field
         pin1Field.delegate = self
         pin2Field = dlReaderView.pin2Field
         pin2Field.delegate = self
         dlReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
-        self.view.addSubview(dlReaderView)
-        self.view.layoutIfNeeded()
+
+        let wrapperView = CustomWrapperView(self.view.frame, dlReaderView)
+        wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        logView = wrapperView.logView
+        scrollView = wrapperView.scrollView
+        self.view.addSubview(wrapperView)
         previousKeyboardHeight = CGFloat(0)
     }
     
@@ -358,17 +361,17 @@ class DLReaderViewController: UIViewController, UITextFieldDelegate, NFCTagReade
     
     func clearPublishedLog() {
         DispatchQueue.main.async {
-            self.dlReaderView.logView.isEditable = true
-            self.dlReaderView.logView.text = nil
-            self.dlReaderView.logView.isEditable = false
+            self.logView.isEditable = true
+            self.logView.text = nil
+            self.logView.isEditable = false
         }
     }
     
     func publishLog(_ text: String) {
         DispatchQueue.main.async {
-            self.dlReaderView.logView.isEditable = true
-            self.dlReaderView.logView.insertText(text + "\n")
-            self.dlReaderView.logView.isEditable = false
+            self.logView.isEditable = true
+            self.logView.insertText(text + "\n")
+            self.logView.isEditable = false
         }
     }
 

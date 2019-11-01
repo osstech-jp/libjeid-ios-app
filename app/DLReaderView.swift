@@ -9,11 +9,9 @@
 import UIKit
 
 class DLReaderView: UIView {
-    let scrollView: UIScrollView
     let pin1Field: UITextField
     let pin2Field: UITextField
     let startButton: UIButton
-    let logView: UITextView
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -40,8 +38,6 @@ class DLReaderView: UIView {
         startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
 
-        logView = CustomViewUtil.createLogView(UIScreen.main.bounds.size)
-
         let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
         stackView.addArrangedSubview(pin1Label)
@@ -49,30 +45,14 @@ class DLReaderView: UIView {
         stackView.addArrangedSubview(pin2Label)
         stackView.addArrangedSubview(pin2Field)
         stackView.addArrangedSubview(startButton)
-        stackView.addArrangedSubview(logView)
-
-        scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(stackView)
 
         super.init(frame: frame)
-        self.backgroundColor = CustomColor.background
-        self.addSubview(scrollView)
+        self.addSubview(stackView)
 
-        let paddingSize = CustomViewUtil.getAutoLayoutPadding(UIScreen.main.bounds.size)
-        scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
-                                        constant: paddingSize).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-                                            constant: paddingSize).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-                                             constant: paddingSize * -1).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor,
-                                           constant: paddingSize * -1).isActive = true
-
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

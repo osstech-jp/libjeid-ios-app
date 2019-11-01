@@ -17,9 +17,12 @@ class MainViewController: UIViewController {
         let bundleShortVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         self.title = bundleName + " " + bundleShortVersion
         mainView = MainView(frame: self.view.frame)
-        mainView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
-        self.view.addSubview(mainView)
+
+        let wrapperView = CustomWrapperView(self.view.frame, mainView)
+        wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        wrapperView.logView.isHidden = true
+        self.view.addSubview(wrapperView)
     }
 
     @objc func pushDlButton(sender: UIButton){
