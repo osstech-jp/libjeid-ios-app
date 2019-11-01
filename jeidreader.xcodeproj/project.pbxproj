@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E06841E230BE271002F7BB7 /* WebAssets in Resources */ = {isa = PBXBuildFile; fileRef = 3E068419230BE270002F7BB7 /* WebAssets */; };
 		3E113E7D230E8DF2001E2AEB /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E113E7C230E8DF2001E2AEB /* CustomColor.swift */; };
+		3E495619236BE8C200A61ED3 /* CustomWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */; };
 		3E4A674E23693AD600B57F30 /* CustomViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */; };
 		3E5A6B5323068EBE00B9D674 /* DLReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */; };
 		3E5A6B57230691D900B9D674 /* DLReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		3E068419230BE270002F7BB7 /* WebAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebAssets; sourceTree = "<group>"; };
 		3E113E7C230E8DF2001E2AEB /* CustomColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWrapperView.swift; sourceTree = "<group>"; };
 		3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUtil.swift; sourceTree = "<group>"; };
 		3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLReaderView.swift; sourceTree = "<group>"; };
 		3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLReaderViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				FBB68B3722F4267A00042971 /* AppDelegate.swift */,
 				3E113E7C230E8DF2001E2AEB /* CustomColor.swift */,
 				3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */,
+				3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */,
 				3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */,
 				3E5A6B56230691D800B9D674 /* DLReaderViewController.swift */,
 				FBB68B4D22F43BB700042971 /* MainView.swift */,
@@ -190,6 +193,7 @@
 				3ECCFC412306AF7C00855D56 /* WebViewController.swift in Sources */,
 				FBB68B4E22F43BB700042971 /* MainView.swift in Sources */,
 				3E5A6B5323068EBE00B9D674 /* DLReaderView.swift in Sources */,
+				3E495619236BE8C200A61ED3 /* CustomWrapperView.swift in Sources */,
 				FBB68B3822F4267A00042971 /* AppDelegate.swift in Sources */,
 				3E113E7D230E8DF2001E2AEB /* CustomColor.swift in Sources */,
 				FBB68B3A22F4267A00042971 /* SceneDelegate.swift in Sources */,
