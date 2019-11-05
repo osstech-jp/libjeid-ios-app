@@ -138,7 +138,9 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
 
                 self.publishLog("## 券面APから情報を取得します")
                 let entriesAp = try reader.selectINCardEntries()
+                session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
                 try entriesAp.verifyPin(self.pin!)
+                session.alertMessage += "成功"
                 session.alertMessage = "\(msgReadingHeader)券面事項..."
                 let frontEntries = try entriesAp.readFrontEntries()
                 session.alertMessage += "成功"
