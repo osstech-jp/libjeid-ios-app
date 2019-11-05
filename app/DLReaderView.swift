@@ -35,15 +35,21 @@ class DLReaderView: UIView {
         pin2Field.isSecureTextEntry = true
         pin2Field.keyboardType = UIKeyboardType.numberPad
 
+        let pin1StackView = CustomViewUtil.createNarrowVerticalStackView(UIScreen.main.bounds.size)
+        pin1StackView.addArrangedSubview(pin1Label)
+        pin1StackView.addArrangedSubview(pin1Field)
+
+        let pin2StackView = CustomViewUtil.createNarrowVerticalStackView(UIScreen.main.bounds.size)
+        pin2StackView.addArrangedSubview(pin2Label)
+        pin2StackView.addArrangedSubview(pin2Field)
+
         startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
 
         let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
-        stackView.addArrangedSubview(pin1Label)
-        stackView.addArrangedSubview(pin1Field)
-        stackView.addArrangedSubview(pin2Label)
-        stackView.addArrangedSubview(pin2Field)
+        stackView.addArrangedSubview(pin1StackView)
+        stackView.addArrangedSubview(pin2StackView)
         stackView.addArrangedSubview(startButton)
 
         super.init(frame: frame)

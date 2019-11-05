@@ -28,13 +28,16 @@ class INReaderView: UIView {
         pinField.isSecureTextEntry = true
         pinField.keyboardType = UIKeyboardType.numberPad
 
+        let pinStackView = CustomViewUtil.createNarrowVerticalStackView(UIScreen.main.bounds.size)
+        pinStackView.addArrangedSubview(pinLabel)
+        pinStackView.addArrangedSubview(pinField)
+
         startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
 
         let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
-        stackView.addArrangedSubview(pinLabel)
-        stackView.addArrangedSubview(pinField)
+        stackView.addArrangedSubview(pinStackView)
         stackView.addArrangedSubview(startButton)
 
         super.init(frame: frame)

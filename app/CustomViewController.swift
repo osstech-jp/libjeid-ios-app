@@ -56,8 +56,8 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
 
         if let activeField = activeField,
             let scrollView = self.scrollView {
-            let fieldBottom = (scrollView.frame.origin.y + activeField.frame.origin.y - scrollView.contentOffset.y)
-                            + activeField.frame.height + 10.0
+            let fieldBottom = (scrollView.frame.origin.y + getActiveFieldOriginY(activeField) - scrollView.contentOffset.y)
+                + activeField.frame.height + activeField.frame.height * 0.5
             let keyboardTop = boundsSize.height - keyboardFrameEnd.size.height
             let keyboardHeight = keyboardFrameEnd.size.height
             if fieldBottom >= keyboardTop {
@@ -117,5 +117,18 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+
+    private func getActiveFieldOriginY(_ textField: UITextField) -> CGFloat {
+        var originY = CGFloat(0)
+        var view: UIView = textField
+        while(!view.isEqual(scrollView)) {
+            originY += view.frame.origin.y
+            guard let superview = view.superview else {
+                return originY
+            }
+            view = superview
+        }
+        return originY
     }
 }

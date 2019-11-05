@@ -13,7 +13,8 @@ class CustomViewUtil: UIView {
     private static let SMALL_TEXT_SIZE_DENOMINATOR = CGFloat(24)
     private static let TEXT_FIELD_HEIGHT_DENOMINATOR = CGFloat(12)
     private static let BUTTON_LABEL_FONT_SIZE_DENOMINATOR = CGFloat(16)
-    private static let STACK_VIEW_SPACING_DENOMINATOR = CGFloat(40)
+    private static let STACK_VIEW_WIDE_SPACING_DENOMINATOR = CGFloat(20)
+    private static let STACK_VIEW_NARROW_SPACING_DENOMINATOR = CGFloat(50)
     private static let AUTO_LAYOUT_PADDING_DENOMINATOR = CGFloat(20)
 
     static func getAutoLayoutPadding(_ size: CGSize) -> CGFloat {
@@ -47,7 +48,18 @@ class CustomViewUtil: UIView {
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
-        let spacing = CGFloat(min(size.width, size.height) / STACK_VIEW_SPACING_DENOMINATOR)
+        let spacing = CGFloat(min(size.width, size.height) / STACK_VIEW_WIDE_SPACING_DENOMINATOR)
+        stackView.spacing = spacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }
+
+    static func createNarrowVerticalStackView(_ size: CGSize) -> UIStackView {
+        let stackView = UIStackView(frame: .zero)
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        let spacing = CGFloat(min(size.width, size.height) / STACK_VIEW_NARROW_SPACING_DENOMINATOR)
         stackView.spacing = spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
