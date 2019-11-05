@@ -55,23 +55,6 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
         return newStr.length <= MAX_PIN_LENGTH
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self,
-                                       selector: #selector(keyboardWillShow(_:)),
-                                       name: UIResponder.keyboardWillShowNotification, object: nil)
-        notificationCenter.addObserver(self,
-                                       selector: #selector(keyboardWillHide(_:)),
-                                       name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.removeObserver(self)
-    }
-
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
         print("tagReaderSessionDidBecomeActive: \(Thread.current)")
     }
