@@ -20,7 +20,6 @@ class MainView: UIView {
     override init(frame: CGRect) {
         inButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         inButton.setTitle("マイナンバーカード", for: .normal)
-        inButton.isHidden = true
 
         dlButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         dlButton.setTitle("運転免許証", for: .normal)
