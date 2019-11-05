@@ -38,7 +38,7 @@ class DLReaderView: UIView {
         startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
 
-        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
+        let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
         stackView.addArrangedSubview(pin1Label)
         stackView.addArrangedSubview(pin1Field)

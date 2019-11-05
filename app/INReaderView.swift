@@ -31,7 +31,7 @@ class INReaderView: UIView {
         startButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         startButton.setTitle("読み取り開始", for: .normal)
 
-        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
+        let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(explanation)
         stackView.addArrangedSubview(pinLabel)
         stackView.addArrangedSubview(pinField)

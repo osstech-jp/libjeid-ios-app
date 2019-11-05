@@ -17,7 +17,7 @@ class CustomWrapperView: UIView {
     }
 
     init(_ frame: CGRect, _ view: UIView) {
-        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
+        let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         logView = CustomViewUtil.createLogView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(view)
         stackView.addArrangedSubview(logView)

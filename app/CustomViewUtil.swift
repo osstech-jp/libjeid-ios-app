@@ -42,7 +42,7 @@ class CustomViewUtil: UIView {
         return textView
     }
 
-    static func createStackView(_ size: CGSize) -> UIStackView {
+    static func createVerticalStackView(_ size: CGSize) -> UIStackView {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         stackView.alignment = .fill

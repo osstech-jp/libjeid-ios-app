@@ -28,7 +28,7 @@ class MainView: UIView {
         epButton.setTitle("パスポート", for: .normal)
         epButton.isHidden = true
 
-        let stackView = CustomViewUtil.createStackView(UIScreen.main.bounds.size)
+        let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(inButton)
         stackView.addArrangedSubview(dlButton)
         stackView.addArrangedSubview(epButton)
