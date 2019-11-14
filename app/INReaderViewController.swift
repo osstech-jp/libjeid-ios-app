@@ -149,9 +149,31 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 if let expireDate = frontEntries.expireDate {
                     dataDict["cardinfo-expire"] = expireDate
                 }
+                if let birthDate = frontEntries.birthDate {
+                    dataDict["cardinfo-birth2"] = birthDate
+                }
+                if let sexString = frontEntries.sexString {
+                    dataDict["cardinfo-sex2"] = sexString
+                }
+                if let nameImage = frontEntries.name {
+                    let src = "data:image/png;base64,\(nameImage.base64EncodedString())"
+                    dataDict["cardinfo-name-image"] = src
+                }
+                if let addressImage = frontEntries.address {
+                    let src = "data:image/png;base64,\(addressImage.base64EncodedString())"
+                    dataDict["cardinfo-address-image"] = src
+                }
                 if let photoData = frontEntries.photoData {
                     let src = "data:image/jp2;base64,\(photoData.base64EncodedString())"
                     dataDict["cardinfo-photo"] = src
+                }
+
+                session.alertMessage = "\(msgReadingHeader)個人番号..."
+                let myNumberImage = try entriesAp.readMyNumber()
+                session.alertMessage += "成功"
+                if let myNumberImage = myNumberImage.myNumber {
+                    let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
+                    dataDict["cardinfo-mynumber-image"] = src
                 }
 
                 session.alertMessage = "読み取り完了"
