@@ -93,9 +93,9 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("# マイナンバーカードの読み取り開始")
                 print("thread: \(Thread.current)")
                 self.publishLog("## 券面入力補助APから情報を取得します")
-                let helperAp = try reader.selectINCardInputHelper()
+                let textAp = try reader.selectINText()
                 do {
-                    try helperAp.verifyPin(self.pin!)
+                    try textAp.verifyPin(self.pin!)
                 } catch let jeidError as JeidError {
                     switch jeidError {
                     case .invalidPin:
@@ -108,70 +108,70 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 }
 
                 session.alertMessage = "\(msgReadingHeader)個人番号..."
-                let myNumber = try helperAp.readMyNumber()
+                let textMyNumber = try textAp.readMyNumber()
                 session.alertMessage += "成功"
                 self.publishLog("### 個人番号")
-                self.publishLog(myNumber.description)
+                self.publishLog(textMyNumber.description)
 
                 var dataDict = Dictionary<String, Any>()
-                if let myNumber = myNumber.myNumber {
+                if let myNumber = textMyNumber.myNumber {
                     dataDict["cardinfo-mynumber"] = myNumber
                 }
 
                 session.alertMessage = "\(msgReadingHeader)4情報..."
-                let attributes = try helperAp.readAttributes()
+                let textAttrs = try textAp.readAttributes()
                 session.alertMessage += "成功"
                 self.publishLog("### 4情報")
-                self.publishLog(attributes.description)
-                if let name = attributes.name {
+                self.publishLog(textAttrs.description)
+                if let name = textAttrs.name {
                     dataDict["cardinfo-name"] = name
                 }
-                if let birthDate = attributes.birthDate {
+                if let birthDate = textAttrs.birthDate {
                     dataDict["cardinfo-birth"] = birthDate
                 }
-                if let sexString = attributes.sexString {
+                if let sexString = textAttrs.sexString {
                     dataDict["cardinfo-sex"] = sexString
                 }
-                if let address = attributes.address {
+                if let address = textAttrs.address {
                     dataDict["cardinfo-addr"] = address
                 }
 
                 self.publishLog("## 券面APから情報を取得します")
-                let entriesAp = try reader.selectINCardEntries()
+                let visualAp = try reader.selectINVisual()
                 session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
-                try entriesAp.verifyPin(self.pin!)
+                try visualAp.verifyPin(self.pin!)
                 session.alertMessage += "成功"
                 session.alertMessage = "\(msgReadingHeader)券面事項..."
-                let frontEntries = try entriesAp.readFrontEntries()
+                let visualEntries = try visualAp.readEntries()
                 session.alertMessage += "成功"
                 self.publishLog("### 券面事項")
-                self.publishLog(frontEntries.description)
-                if let expireDate = frontEntries.expireDate {
+                self.publishLog(visualEntries.description)
+                if let expireDate = visualEntries.expireDate {
                     dataDict["cardinfo-expire"] = expireDate
                 }
-                if let birthDate = frontEntries.birthDate {
+                if let birthDate = visualEntries.birthDate {
                     dataDict["cardinfo-birth2"] = birthDate
                 }
-                if let sexString = frontEntries.sexString {
+                if let sexString = visualEntries.sexString {
                     dataDict["cardinfo-sex2"] = sexString
                 }
-                if let nameImage = frontEntries.name {
+                if let nameImage = visualEntries.name {
                     let src = "data:image/png;base64,\(nameImage.base64EncodedString())"
                     dataDict["cardinfo-name-image"] = src
                 }
-                if let addressImage = frontEntries.address {
+                if let addressImage = visualEntries.address {
                     let src = "data:image/png;base64,\(addressImage.base64EncodedString())"
                     dataDict["cardinfo-address-image"] = src
                 }
-                if let photoData = frontEntries.photoData {
+                if let photoData = visualEntries.photoData {
                     let src = "data:image/jp2;base64,\(photoData.base64EncodedString())"
                     dataDict["cardinfo-photo"] = src
                 }
 
                 session.alertMessage = "\(msgReadingHeader)個人番号..."
-                let myNumberImage = try entriesAp.readMyNumber()
+                let visualMyNumber = try visualAp.readMyNumber()
                 session.alertMessage += "成功"
-                if let myNumberImage = myNumberImage.myNumber {
+                if let myNumberImage = visualMyNumber.myNumber {
                     let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
                     dataDict["cardinfo-mynumber-image"] = src
                 }
