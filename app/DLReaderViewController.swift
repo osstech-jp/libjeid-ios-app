@@ -90,6 +90,12 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 reader.debug = true
                 self.clearPublishedLog()
                 session.alertMessage = "読み取り開始..."
+                let cardType = try reader.detectCardType()
+                if (cardType != CardType.DL) {
+                    self.publishLog("運転免許証ではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)運転免許証ではありません")
+                    return
+                }
                 self.publishLog("# 運転免許証の読み取り開始")
                 print("thread: \(Thread.current)")
                 let ap = try reader.selectDL()

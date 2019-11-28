@@ -90,6 +90,12 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 let reader = try JeidReader(tag)
                 reader.debug = true
                 session.alertMessage = "読み取り開始..."
+                let cardType = try reader.detectCardType()
+                if (cardType != CardType.IN) {
+                    self.publishLog("マイナンバーカードではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)マイナンバーカードではありません")
+                    return
+                }
                 self.publishLog("# マイナンバーカードの読み取り開始")
                 print("thread: \(Thread.current)")
                 self.publishLog("## 券面入力補助APから情報を取得します")
