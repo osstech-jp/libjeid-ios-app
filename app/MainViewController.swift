@@ -19,6 +19,7 @@ class MainViewController: CustomViewController {
         mainView = MainView(frame: self.view.frame)
         mainView.inButton.addTarget(self, action: #selector(pushInButton), for: .touchUpInside)
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
+        mainView.pinButton.addTarget(self, action: #selector(pushPinButton), for: .touchUpInside)
 
         let wrapperView = CustomWrapperView(self.view.frame, mainView)
         scrollView = wrapperView.scrollView
@@ -34,6 +35,11 @@ class MainViewController: CustomViewController {
 
     @objc func pushDlButton(sender: UIButton){
         let nextViewController = DLReaderViewController()
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+
+    @objc func pushPinButton(sender: UIButton){
+        let nextViewController = PinStatusViewController()
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

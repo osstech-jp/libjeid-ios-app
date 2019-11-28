@@ -12,6 +12,7 @@ class MainView: UIView {
     let inButton: UIButton
     let dlButton: UIButton
     let epButton: UIButton
+    let pinButton: UIButton
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -28,10 +29,14 @@ class MainView: UIView {
         epButton.setTitle("パスポート", for: .normal)
         epButton.isHidden = true
 
+        pinButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
+        pinButton.setTitle("暗証番号ステータス", for: .normal)
+
         let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(inButton)
         stackView.addArrangedSubview(dlButton)
         stackView.addArrangedSubview(epButton)
+        stackView.addArrangedSubview(pinButton)
 
         super.init(frame: frame)
         self.addSubview(stackView)
