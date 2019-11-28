@@ -6,9 +6,7 @@
 //  All rights reserved.
 //
 
-import CoreNFC
 import UIKit
-import libjeid
 
 class CustomViewController: UIViewController, UITextFieldDelegate {
     var logView: UITextView?
