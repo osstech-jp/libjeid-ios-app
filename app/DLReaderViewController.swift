@@ -212,7 +212,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog(changedEntries.description)
 
                 var remarks: [Dictionary<String, String>] = []
-                if (changedEntries.isChanged != nil && changedEntries.isChanged!) {
+                if (changedEntries.isChanged) {
                     for newName in changedEntries.newNames! {
                         var dict = Dictionary<String, String>()
                         dict["label"] = "新氏名"
@@ -249,7 +249,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     session.alertMessage = "\(msgReadingHeader)記載事項変更(本籍)..."
                     let changedRegDomicile = try ap.readChangedRegisteredDomicile()
                     session.alertMessage += "成功"
-                    if (changedRegDomicile.isChanged != nil && changedRegDomicile.isChanged!) {
+                    if (changedRegDomicile.isChanged) {
                         for newRegDomicile in changedRegDomicile.newRegisteredDomiciles! {
                             var dict = Dictionary<String, String>()
                             dict["label"] = "新本籍"
