@@ -68,7 +68,6 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
             do {
                 self.clearPublishedLog()
                 let reader = try JeidReader(tag)
-                reader.debug = true
                 self.publishLog("# 暗証番号ステータスの読み取り開始")
                 print("thread: \(Thread.current)")
                 session.alertMessage = "\(msgReadingHeader)カード種別の判別..."

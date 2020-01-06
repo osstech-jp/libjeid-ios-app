@@ -88,7 +88,6 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     return
                 }
                 let reader = try JeidReader(tag)
-                reader.debug = true
                 session.alertMessage = "読み取り開始..."
                 let cardType = try reader.detectCardType()
                 if (cardType != CardType.IN) {
