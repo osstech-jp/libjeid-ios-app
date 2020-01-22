@@ -224,6 +224,18 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                         dict["text"] = newAddr
                         remarks.append(dict)
                     }
+                    for newCond in changedEntries.newConditions! {
+                        var dict = Dictionary<String, String>()
+                        dict["label"] = "新条件"
+                        dict["text"] = newCond
+                        remarks.append(dict)
+                    }
+                    for condCancel in changedEntries.conditionCancellations! {
+                        var dict = Dictionary<String, String>()
+                        dict["label"] = "条件解除"
+                        dict["text"] = condCancel
+                        remarks.append(dict)
+                    }
                 }
 
                 session.alertMessage = "\(msgReadingHeader)電子署名..."
