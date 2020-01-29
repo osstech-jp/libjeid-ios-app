@@ -148,18 +148,14 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 session.alertMessage += "成功"
 
                 var dataDict = Dictionary<String, Any>()
-                if let nameHtml = entries.nameHtml(extChars) {
-                    dataDict["dl-name"] = nameHtml
-                }
+                dataDict["dl-name"] = try entries.nameHtml(extChars)
                 if let kana = entries.kana {
                     dataDict["dl-kana"] = kana
                 }
                 if let birthDate = entries.birthDate {
                     dataDict["dl-birth"] = birthDate.stringValue
                 }
-                if let addressHtml = entries.addressHtml(extChars) {
-                    dataDict["dl-addr"] = addressHtml
-                }
+                dataDict["dl-addr"] = try entries.addressHtml(extChars)
                 if let issueDate = entries.issueDate {
                     dataDict["dl-issue"] = issueDate.stringValue
                 }
@@ -183,12 +179,10 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                         = pscName.replacingCharacters(in: pscName.range(of: "公安委員会")!, with: "")
                 }
 
-                if let conditionsHtml = entries.conditionsHtml(extChars) {
-                    var i: Int = 1
-                    for conditionHtml in conditionsHtml {
-                        dataDict[String(format: "dl-condition%d", i)] = conditionHtml
-                        i += 1
-                    }
+                var i: Int = 1
+                for conditionHtml in try entries.conditionsHtml(extChars) {
+                    dataDict[String(format: "dl-condition%d", i)] = conditionHtml
+                    i += 1
                 }
 
                 if let categories = entries.categories {
@@ -245,9 +239,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     session.alertMessage = "\(msgReadingHeader)記載事項(本籍)..."
                     let registeredDomicile = try ap.readRegisteredDomicile()
                     session.alertMessage += "成功"
-                    if let registeredDomicileHtml = registeredDomicile.registeredDomicileHtml(extChars) {
-                        dataDict["dl-registered-domicile"] = registeredDomicileHtml
-                    }
+                    dataDict["dl-registered-domicile"] = try registeredDomicile.registeredDomicileHtml(extChars)
 
                     session.alertMessage = "\(msgReadingHeader)写真..."
                     let photo = try ap.readPhoto()
