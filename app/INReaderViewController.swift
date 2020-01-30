@@ -112,9 +112,10 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     }
                 }
 
-                session.alertMessage = "\(msgReadingHeader)個人番号..."
-                let textMyNumber = try textAp.readMyNumber()
+                session.alertMessage = "\(msgReadingHeader)券面入力補助AP内の情報..."
+                let textFiles = try textAp.readFiles()
                 session.alertMessage += "成功"
+                let textMyNumber = try textFiles.getMyNumber()
                 self.publishLog("### 個人番号")
                 self.publishLog(textMyNumber.description)
 
@@ -123,9 +124,7 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     dataDict["cardinfo-mynumber"] = myNumber
                 }
 
-                session.alertMessage = "\(msgReadingHeader)4情報..."
-                let textAttrs = try textAp.readAttributes()
-                session.alertMessage += "成功"
+                let textAttrs = try textFiles.getAttributes()
                 self.publishLog("### 4情報")
                 self.publishLog(textAttrs.description)
                 if let name = textAttrs.name {
@@ -146,9 +145,10 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
                 try visualAp.verifyPin(self.pin!)
                 session.alertMessage += "成功"
-                session.alertMessage = "\(msgReadingHeader)券面事項..."
-                let visualEntries = try visualAp.readEntries()
+                session.alertMessage = "\(msgReadingHeader)券面AP内の情報..."
+                let visualFiles = try visualAp.readFiles()
                 session.alertMessage += "成功"
+                let visualEntries = try visualFiles.getEntries()
                 self.publishLog("### 券面事項")
                 self.publishLog(visualEntries.description)
                 if let expireDate = visualEntries.expireDate {
@@ -173,9 +173,7 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     dataDict["cardinfo-photo"] = src
                 }
 
-                session.alertMessage = "\(msgReadingHeader)個人番号..."
-                let visualMyNumber = try visualAp.readMyNumber()
-                session.alertMessage += "成功"
+                let visualMyNumber = try visualFiles.getMyNumber()
                 if let myNumberImage = visualMyNumber.myNumber {
                     let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
                     dataDict["cardinfo-mynumber-image"] = src
