@@ -98,6 +98,12 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("# 運転免許証の読み取り開始")
                 print("thread: \(Thread.current)")
                 let ap = try reader.selectDL()
+
+                // PINを入力せず共通データを読み出す場合は、
+                // DriverLicenseAP.readCommonData()を利用できます
+                // 通常はPINを入力した後、
+                // DriverLicenseAP.readFiles()ですべてを読み出した後に
+                // DriverLicenseFiles.getCommonData()を利用してください
                 session.alertMessage = "\(msgReadingHeader)共通データ要素..."
                 let commonData = try ap.readCommonData()
                 session.alertMessage += "成功"
@@ -137,15 +143,14 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     }
                 }
 
-                session.alertMessage = "\(msgReadingHeader)記載事項(本籍除く)..."
-                let entries = try ap.readEntries()
+                session.alertMessage = "\(msgReadingHeader)ファイルの読み出し..."
+                let files = try ap.readFiles()
                 session.alertMessage += "成功"
+                let entries = try files.getEntries()
                 self.publishLog("## 記載事項(本籍除く)")
                 self.publishLog(entries.description)
 
-                session.alertMessage = "\(msgReadingHeader)外字..."
-                let extChars = try ap.readExternalCharacters()
-                session.alertMessage += "成功"
+                let extChars = try files.getExternalCharacters()
 
                 var dataDict = Dictionary<String, Any>()
                 dataDict["dl-name"] = try entries.nameHtml(extChars)
@@ -198,9 +203,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     dataDict["dl-categories"] = categoriesDict
                 }
 
-                session.alertMessage = "\(msgReadingHeader)記載事項変更等(本籍除く)..."
-                let changedEntries = try ap.readChangedEntries()
-                session.alertMessage += "成功"
+                let changedEntries = try files.getChangedEntries()
                 self.publishLog("## 記載事項変更等(本籍除く)")
                 self.publishLog(changedEntries.description)
 
@@ -232,61 +235,54 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     }
                 }
 
-                session.alertMessage = "\(msgReadingHeader)電子署名..."
-                let signature = try ap.readSignature()
-                session.alertMessage += "成功"
-                if (self.pin2 != nil && !self.pin2!.isEmpty) {
-                    session.alertMessage = "\(msgReadingHeader)記載事項(本籍)..."
-                    let registeredDomicile = try ap.readRegisteredDomicile()
-                    session.alertMessage += "成功"
+                do {
+                    let registeredDomicile = try files.getRegisteredDomicile()
                     dataDict["dl-registered-domicile"] = try registeredDomicile.registeredDomicileHtml(extChars)
 
-                    session.alertMessage = "\(msgReadingHeader)写真..."
-                    let photo = try ap.readPhoto()
-                    session.alertMessage += "成功"
+                    let photo = try files.getPhoto()
                     if let photoData = photo.photoData {
                         let src = "data:image/jp2;base64,\(photoData.base64EncodedString())"
                         dataDict["dl-photo"] = src
                     }
 
-                    session.alertMessage = "\(msgReadingHeader)記載事項変更(本籍)..."
-                    let changedRegDomicile = try ap.readChangedRegisteredDomicile()
-                    session.alertMessage += "成功"
+                    let changedRegDomicile = try files.getChangedRegisteredDomicile()
+                    var newRegDomiciles: [Dictionary<String, String>] = []
                     if (changedRegDomicile.isChanged) {
                         for newRegDomicile in changedRegDomicile.newRegisteredDomiciles! {
                             var dict = Dictionary<String, String>()
                             dict["label"] = "新本籍"
                             dict["text"] = newRegDomicile
-                            remarks.append(dict)
+                            newRegDomiciles.append(dict)
                         }
                     }
+                    remarks += newRegDomiciles
 
-                    var verified = false
+                    let signature = try files.getSignature()
+                    self.publishLog("## 電子署名")
+                    if let signatureSubject = signature.subject {
+                        self.publishLog("Subject: \(signatureSubject)")
+                        dataDict["dl-signature-subject"] = signatureSubject
+                    }
+                    if let signatureSKI = signature.subjectKeyIdentifier {
+                        let signatureSkiStr = signatureSKI.map { String(format: "%.2hhx", $0) }.joined(separator: ":")
+                        self.publishLog("Subject Key Identifier: \(signatureSkiStr)")
+                        dataDict["dl-signature-ski"] = signatureSkiStr
+                    }
+
+                    // 真正性検証
                     do {
-                        try signature.initVerify()
-                        try signature.update(entries.encoded)
-                        try signature.update(registeredDomicile.encoded)
-                        try signature.update(photo.encoded)
-                        verified = try signature.verify()
+                        let result = try files.validate()
+                        dataDict["dl-verified"] = result.isValid
+                        self.publishLog("署名検証: \(result.isValid)\n")
                     } catch {
                         self.publishLog("\(error)")
                     }
-                    dataDict["dl-verified"] = verified
-                    self.publishLog("署名検証: \(verified)\n")
+                } catch (JeidError.fileNotFound(message: _)) {
+                    // PIN2を入力していない場合、filesオブジェクトは
+                    // JeidError.fileNotFound(message: String)をスローします
                 }
 
                 dataDict["dl-remarks"] = remarks
-
-                self.publishLog("## 電子署名")
-                if let signatureSubject = signature.subject {
-                    self.publishLog("Subject: \(signatureSubject)")
-                    dataDict["dl-signature-subject"] = signatureSubject
-                }
-                if let signatureSKI = signature.subjectKeyIdentifier {
-                    let signatureSkiStr = signatureSKI.map { String(format: "%.2hhx", $0) }.joined(separator: ":")
-                    self.publishLog("Subject Key Identifier: \(signatureSkiStr)")
-                    dataDict["dl-signature-ski"] = signatureSkiStr
-                }
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
                 self.openWebView(dataDict)
