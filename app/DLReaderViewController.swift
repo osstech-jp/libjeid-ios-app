@@ -173,8 +173,8 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 if let expireDate = entries.expireDate {
                     dataDict["dl-expire"] = expireDate.stringValue
                     let now = Date()
-                    let date = expireDate.dateValue.addingTimeInterval(60 * 60 * 24 - 1)
-                    dataDict["dl-is-expired"] = String(now > date)
+                    let date = expireDate.dateValue.addingTimeInterval(60 * 60 * 24)
+                    dataDict["dl-is-expired"] = Bool(now >= date)
                 }
                 if let licenseNumber = entries.licenseNumber {
                     dataDict["dl-number"] = licenseNumber
