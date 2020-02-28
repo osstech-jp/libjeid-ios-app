@@ -150,17 +150,15 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("## 記載事項(本籍除く)")
                 self.publishLog(entries.description)
 
-                let extChars = try files.getExternalCharacters()
-
                 var dataDict = Dictionary<String, Any>()
-                dataDict["dl-name"] = try entries.nameHtml(extChars)
+                dataDict["dl-name"] = try self.dlStringToDictArray(entries.name)
                 if let kana = entries.kana {
                     dataDict["dl-kana"] = kana
                 }
                 if let birthDate = entries.birthDate {
                     dataDict["dl-birth"] = birthDate.stringValue
                 }
-                dataDict["dl-addr"] = try entries.addressHtml(extChars)
+                dataDict["dl-addr"] = try self.dlStringToDictArray(entries.address)
                 if let issueDate = entries.issueDate {
                     dataDict["dl-issue"] = issueDate.stringValue
                 }
@@ -185,9 +183,11 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 }
 
                 var i: Int = 1
-                for conditionHtml in try entries.conditionsHtml(extChars) {
-                    dataDict[String(format: "dl-condition%d", i)] = conditionHtml
-                    i += 1
+                if let conditions = entries.conditions {
+                    for condition in conditions {
+                        dataDict[String(format: "dl-condition%d", i)] = condition
+                        i += 1
+                    }
                 }
 
                 if let categories = entries.categories {
@@ -207,37 +207,52 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("## 記載事項変更等(本籍除く)")
                 self.publishLog(changedEntries.description)
 
-                var remarks: [Dictionary<String, String>] = []
+                let formatter = DateFormatter()
+                formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+                formatter.dateFormat = "yyyyMMdd"
+                var changes: [Dictionary<String, Any>] = []
                 if (changedEntries.isChanged) {
-                    for newName in changedEntries.newNames! {
-                        var dict = Dictionary<String, String>()
+                    for newName in changedEntries.newNameList {
+                        var dict = Dictionary<String, Any>()
                         dict["label"] = "新氏名"
-                        dict["text"] = newName
-                        remarks.append(dict)
+                        dict["date"] = newName.date.stringValue
+                        dict["ad"] = formatter.string(from: newName.date.dateValue)
+                        dict["value"] = try self.dlStringToDictArray(newName.value)
+                        dict["psc"] = newName.psc
+                        changes.append(dict)
                     }
-                    for newAddr in changedEntries.newAddresses! {
-                        var dict = Dictionary<String, String>()
+                    for newAddress in changedEntries.newAddressList {
+                        var dict = Dictionary<String, Any>()
                         dict["label"] = "新住所"
-                        dict["text"] = newAddr
-                        remarks.append(dict)
+                        dict["date"] = newAddress.date.stringValue
+                        dict["ad"] = formatter.string(from: newAddress.date.dateValue)
+                        dict["value"] = try self.dlStringToDictArray(newAddress.value)
+                        dict["psc"] = newAddress.psc
+                        changes.append(dict)
                     }
-                    for newCond in changedEntries.newConditions! {
-                        var dict = Dictionary<String, String>()
+                    for newCond in changedEntries.newConditionList {
+                        var dict = Dictionary<String, Any>()
                         dict["label"] = "新条件"
-                        dict["text"] = newCond
-                        remarks.append(dict)
+                        dict["date"] = newCond.date.stringValue
+                        dict["ad"] = formatter.string(from: newCond.date.dateValue)
+                        dict["value"] = try self.dlStringToDictArray(newCond.value)
+                        dict["psc"] = newCond.psc
+                        changes.append(dict)
                     }
-                    for condCancel in changedEntries.conditionCancellations! {
-                        var dict = Dictionary<String, String>()
+                    for condCancel in changedEntries.conditionCancellationList {
+                        var dict = Dictionary<String, Any>()
                         dict["label"] = "条件解除"
-                        dict["text"] = condCancel
-                        remarks.append(dict)
+                        dict["date"] = condCancel.date.stringValue
+                        dict["ad"] = formatter.string(from: condCancel.date.dateValue)
+                        dict["value"] = try self.dlStringToDictArray(condCancel.value)
+                        dict["psc"] = condCancel.psc
+                        changes.append(dict)
                     }
                 }
 
                 do {
                     let registeredDomicile = try files.getRegisteredDomicile()
-                    dataDict["dl-registered-domicile"] = try registeredDomicile.registeredDomicileHtml(extChars)
+                    dataDict["dl-registered-domicile"] = try self.dlStringToDictArray(registeredDomicile.registeredDomicile)
 
                     let photo = try files.getPhoto()
                     if let photoData = photo.photoData {
@@ -246,16 +261,19 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     }
 
                     let changedRegDomicile = try files.getChangedRegisteredDomicile()
-                    var newRegDomiciles: [Dictionary<String, String>] = []
+                    var newRegDomiciles: [Dictionary<String, Any>] = []
                     if (changedRegDomicile.isChanged) {
-                        for newRegDomicile in changedRegDomicile.newRegisteredDomiciles! {
-                            var dict = Dictionary<String, String>()
+                        for newRegDomicile in changedRegDomicile.newRegisteredDomicileList {
+                            var dict = Dictionary<String, Any>()
                             dict["label"] = "新本籍"
-                            dict["text"] = newRegDomicile
+                            dict["date"] = newRegDomicile.date.stringValue
+                            dict["ad"] = formatter.string(from: newRegDomicile.date.dateValue)
+                            dict["value"] = try self.dlStringToDictArray(newRegDomicile.value)
+                            dict["psc"] = newRegDomicile.psc
                             newRegDomiciles.append(dict)
                         }
                     }
-                    remarks += newRegDomiciles
+                    changes += newRegDomiciles
 
                     let signature = try files.getSignature()
                     self.publishLog("## 電子署名")
@@ -282,7 +300,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     // JeidError.fileNotFound(message: String)をスローします
                 }
 
-                dataDict["dl-remarks"] = remarks
+                dataDict["dl-changes"] = changes
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
                 self.openWebView(dataDict)
@@ -328,5 +346,14 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 + "残り\(counter)回間違えるとブロックされます。"
         }
         openAlertView(title, message)
+    }
+
+    func dlStringToDictArray(_ dlString: DLString) throws -> [Dictionary<String, Any>] {
+        guard let jsonData = try dlString.toJSON().data(using: .utf8),
+            let jsonObj = try? JSONSerialization.jsonObject(with: jsonData, options: []),
+            let dictArray = jsonObj as? [Dictionary<String, Any>] else {
+                throw JeidError.decodeFailed(message: "failed to decode JSON String: \(try dlString.toJSON())")
+        }
+        return dictArray
     }
 }
