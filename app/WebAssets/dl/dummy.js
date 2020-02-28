@@ -1,6 +1,7 @@
 
 var testData = {
-    'dl-name': '日本　花子',
+    //'dl-name': '日本　花子',
+    'dl-name': [{"type":"text/plain","value":"宮"},{"type":"image/png","value":"iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQAAAAA2RLUcAAAAmElEQVR4nI3NMQrDMAwFUEGHbM0RfJGSXKtdGmiGLqU5Qq/SUKiuYeOhYzIGaqzakgIeOkTDf6APEpAM5BjVV+mopsApiUlUe/G9y0aApMWL2vNdh9eJavYTKwKPgw+iC4adl45djl/VseH0zN4AoHQgMv+8n1vxYESo1FpsdN+0G7SwX4VST9ITxU4k/r9Fq85qWPuHSvQDdmz739pgLJgAAAAASUVORK5CYII="},{"type":"text/plain","value":"　"},{"type":"image/png","value":"iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQAAAAA2RLUcAAAAmElEQVR4nI3NMQrDMAwFUEGHbM0RfJGSXKtdGmiGLqU5Qq/SUKiuYeOhYzIGaqzakgIeOkTDf6APEpAM5BjVV+mopsApiUlUe/G9y0aApMWL2vNdh9eJavYTKwKPgw+iC4adl45djl/VseH0zN4AoHQgMv+8n1vxYESo1FpsdN+0G7SwX4VST9ITxU4k/r9Fq85qWPuHSvQDdmz739pgLJgAAAAASUVORK5CYII="},{"type":"image/x-missing"},{"type":"image/png","value":"iVBORw0KGgoAAAANSUhEUgAAADIAAAAyAQAAAAA2RLUcAAAAmElEQVR4nI3NMQrDMAwFUEGHbM0RfJGSXKtdGmiGLqU5Qq/SUKiuYeOhYzIGaqzakgIeOkTDf6APEpAM5BjVV+mopsApiUlUe/G9y0aApMWL2vNdh9eJavYTKwKPgw+iC4adl45djl/VseH0zN4AoHQgMv+8n1vxYESo1FpsdN+0G7SwX4VST9ITxU4k/r9Fq85qWPuHSvQDdmz739pgLJgAAAAASUVORK5CYII="}],
     'dl-kana': 'ニホン　ハナコ',
     'dl-birth': '昭和50年 6月 1日',
     'dl-addr': '東京都千代田区霞が関２−１−２',
@@ -17,8 +18,8 @@ var testData = {
     'dl-sc': '〇〇〇〇〇',
     'dl-registered-domicile': '〇〇〇〇〇',
     'dl-verified': true,
-    'dl-remarks': [
-        {'label':"新住所", 'text':'４３００１０１東京都千代田区霞が関２−１−３東京都公安'},
+    'dl-changes': [
+      {'label':'新住所', 'date':'平成30年01月01日', 'ad':'20180101', 'value':'東京都千代田区霞が関２−１−３', "psc":'東京都公安'},
     ],
     'dl-categories': [
         {"tag":0x22,"name":"二・小・原","date":"平成20年04月01日","licensed":true},

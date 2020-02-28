@@ -32,14 +32,14 @@ function full2half(str) {
 function render(json) {
     data = JSON.parse(json);
     if ('dl-name' in data) {
-        document.getElementById("dl-name").innerHTML = data['dl-name'];
+        document.getElementById("dl-name").innerHTML = dlstr2html(data['dl-name']);
     }
     if ('dl-birth' in data) {
         document.getElementById("dl-birth").innerHTML = htmlEscape(data['dl-birth'])
             + '生';
     }
     if ('dl-addr' in data) {
-        document.getElementById("dl-addr").innerHTML = data['dl-addr'];
+        document.getElementById("dl-addr").innerHTML = dlstr2html(data['dl-addr']);
     }
     if ('dl-issue' in data) {
         document.getElementById("dl-issue").innerHTML = htmlEscape(data['dl-issue']);
@@ -128,7 +128,7 @@ function render(json) {
     elm.innerHTML = '<tr><th style="width: 30%"></th><th style="width: 70%"></th></tr>\n';
     if ('dl-name' in data) {
         elm.innerHTML += '<tr><td>氏名</td><td>' +
-            data['dl-name'] +
+            dlstr2html(data['dl-name']) +
             '</td></tr>\n';
     }
     if ('dl-kana' in data) {
@@ -138,12 +138,12 @@ function render(json) {
     }
     if ('dl-addr' in data) {
         elm.innerHTML += "<tr><td>住所</td><td>" +
-            data['dl-addr'] +
+            dlstr2html(data['dl-addr']) +
             "</td></tr>\n";
     }
     if ('dl-registered-domicile' in data) {
         elm.innerHTML += "<tr><td>本籍</td><td>" +
-            data['dl-registered-domicile'] +
+            dlstr2html(data['dl-registered-domicile']) +
             "</td></tr>\n";
     }
 
@@ -239,68 +239,30 @@ function render(json) {
         }
     }
 
-    var elm = document.getElementById('dl-remarks');
-    if ('dl-remarks' in data) {
-        var remarks = data['dl-remarks'];
-        remarks.sort(function(a, b) {
-            var aDate = a['text'].substr(0, 7);
-            var bDate = b['text'].substr(0, 7);
-            if (aDate > bDate) {
+    var elm = document.getElementById('dl-changes');
+    if ('dl-changes' in data) {
+        var changes = data['dl-changes'];
+        changes.sort(function(a, b) {
+            if (a['ad'] > b['ad']) {
                 return 1;
-            } else if (aDate < bDate) {
+            } else if (a['date'] < b['date']) {
                 return -1;
             } else {
                 return 0;
             }
         });
-        for(var i=0; i<remarks.length; i++) {
-            var label = remarks[i]['label'];
-            var text = remarks[i]['text'];
-            var date = "";
-            if (/^[０-９]{7}/.test(text)) {
-                var dateNumber = text.substr(0, 7);
-                text = text.slice(7);
-                dateNumber = dateNumber.replace(/[０-９]/g, function(s) {
-                    return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-                });
-                var era = dateNumber / 1000000 | 0;
-                var year = dateNumber % 1000000 / 10000 | 0;
-                var month = dateNumber % 10000 / 100 | 0;
-                var day = dateNumber % 100;
-                var eraName;
-                switch (era) {
-                    case 1:
-                        eraName = '明治';
-                        break;
-                    case 2:
-                        eraName = '大正';
-                        break;
-                    case 3:
-                        eraName = '昭和';
-                        break;
-                    case 4:
-                        eraName = '平成';
-                        break;
-                    case 5:
-                        eraName = '令和';
-                        break;
-                    default:
-                        eraName = '○○';
-                        break;
-                }
-                date = eraName + year + "年" + month + "月" + day + "日";
-            }
-            var pscName = text.substr(-5, 5); //「psc」は公安委員会(Public Safety Commission)の略
-            text = text.slice(0, -5);
-
-            if (elm.innerHTML == "&nbsp;") {
-                elm.innerHTML = htmlEscape(date) + "<br>\n" + htmlEscape(label)+ "："
-                    + htmlEscape(text) + "<div class=\"dl-remarks-seal\">" + htmlEscape(pscName) + "</div>";
+        for(var i=0; i<changes.length; i++) {
+            var label = changes[i]['label'];
+            var value = changes[i]['value'];
+            var psc = changes[i]['psc'];
+            var date = changes[i]['date'];
+            if (i == 0) {
+                date += "<br/>\n";
             } else {
-                elm.innerHTML += "<br>\n";
-                elm.innerHTML += htmlEscape(date) + "&nbsp;" + htmlEscape(label) + "："
-                    + htmlEscape(text) + "<div class=\"dl-remarks-seal\">" + htmlEscape(pscName) + "</div>";;
+                date += "&nbsp;";
             }
+            elm.innerHTML += date + htmlEscape(label) + "："
+                + dlstr2html(value) + "<div class=\"dl-changes-seal\">" + htmlEscape(psc) + "</div><br/>";
         }
     }
 }
