@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		3E495619236BE8C200A61ED3 /* CustomWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */; };
 		3E49561B236C49DB00A61ED3 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E49561A236C49DB00A61ED3 /* CustomViewController.swift */; };
 		3E4A674E23693AD600B57F30 /* CustomViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */; };
+		3E4C8A42243C64640038BC5A /* libjeid.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E4C8A41243C64640038BC5A /* libjeid.xcframework */; };
 		3E4EF865238F9CD400DF3747 /* PinStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EF864238F9CD300DF3747 /* PinStatusView.swift */; };
 		3E4EF867238F9CE000DF3747 /* PinStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4EF866238F9CE000DF3747 /* PinStatusViewController.swift */; };
 		3E5A6B5323068EBE00B9D674 /* DLReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */; };
@@ -19,7 +20,6 @@
 		3EA6BD162371291600529CC6 /* INReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6BD152371291600529CC6 /* INReaderView.swift */; };
 		3EA6BD1A23713FCD00529CC6 /* INReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6BD1923713FCD00529CC6 /* INReaderViewController.swift */; };
 		3ECCFC412306AF7C00855D56 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCFC402306AF7C00855D56 /* WebViewController.swift */; };
-		FB6B993C2344C5EA0038E93A /* libjeid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB6B993A2344C5750038E93A /* libjeid.framework */; };
 		FBB68B3822F4267A00042971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3722F4267A00042971 /* AppDelegate.swift */; };
 		FBB68B3A22F4267A00042971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3922F4267A00042971 /* SceneDelegate.swift */; };
 		FBB68B3C22F4267A00042971 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3B22F4267A00042971 /* MainViewController.swift */; };
@@ -46,6 +46,7 @@
 		3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWrapperView.swift; sourceTree = "<group>"; };
 		3E49561A236C49DB00A61ED3 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUtil.swift; sourceTree = "<group>"; };
+		3E4C8A41243C64640038BC5A /* libjeid.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libjeid.xcframework; sourceTree = "<group>"; };
 		3E4EF864238F9CD300DF3747 /* PinStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinStatusView.swift; sourceTree = "<group>"; };
 		3E4EF866238F9CE000DF3747 /* PinStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinStatusViewController.swift; sourceTree = "<group>"; };
 		3E5A6B4E23068EBE00B9D674 /* DLReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLReaderView.swift; sourceTree = "<group>"; };
@@ -54,7 +55,6 @@
 		3EA6BD1923713FCD00529CC6 /* INReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INReaderViewController.swift; sourceTree = "<group>"; };
 		3ECCFC402306AF7C00855D56 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FB481A0C22F45ACC003865D3 /* jeidreader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jeidreader.entitlements; sourceTree = "<group>"; };
-		FB6B993A2344C5750038E93A /* libjeid.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libjeid.framework; sourceTree = "<group>"; };
 		FBB68B3422F4267A00042971 /* jeidreader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeidreader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB68B3722F4267A00042971 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBB68B3922F4267A00042971 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB6B993C2344C5EA0038E93A /* libjeid.framework in Frameworks */,
+				3E4C8A42243C64640038BC5A /* libjeid.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 		FB6B99372344C5080038E93A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FB6B993A2344C5750038E93A /* libjeid.framework */,
+				3E4C8A41243C64640038BC5A /* libjeid.xcframework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
