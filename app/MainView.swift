@@ -12,6 +12,7 @@ class MainView: UIView {
     let inButton: UIButton
     let dlButton: UIButton
     let epButton: UIButton
+    let rcButton: UIButton
     let pinButton: UIButton
 
     required init(coder: NSCoder) {
@@ -29,6 +30,9 @@ class MainView: UIView {
         epButton.setTitle("パスポート", for: .normal)
         epButton.isHidden = true
 
+        rcButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
+        rcButton.setTitle("在留カード", for: .normal)
+
         pinButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         pinButton.setTitle("暗証番号ステータス", for: .normal)
 
@@ -36,6 +40,7 @@ class MainView: UIView {
         stackView.addArrangedSubview(inButton)
         stackView.addArrangedSubview(dlButton)
         stackView.addArrangedSubview(epButton)
+        stackView.addArrangedSubview(rcButton)
         stackView.addArrangedSubview(pinButton)
 
         super.init(frame: frame)
