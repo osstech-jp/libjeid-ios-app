@@ -151,7 +151,7 @@ class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog(address.description)
 
                 // カード種別が在留カードの場合
-                if "1" == cardType.type {
+                if cardType.type == "1" {
                     let comprehensivePermission = try files.getComprehensivePermission()
                     self.publishLog("## 裏面資格外活動包括許可欄")
                     self.publishLog(comprehensivePermission.description)
