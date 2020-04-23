@@ -105,8 +105,8 @@ class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog(cardType.description)
                 
                 if (self.number == nil || self.number!.isEmpty) {
-                    self.publishLog("在留カード等番号を入力してください")
-                    session.invalidate(errorMessage: "\(msgErrorHeader)在留カード等番号が入力されていません")
+                    self.publishLog("在留カード番号または特別永住者証明書番号を入力してください")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)在留カード等の番号が入力されていません")
                     return
                 }
                 do {
