@@ -116,11 +116,16 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     return
                 }
                 do {
+                    session.alertMessage = "\(msgReadingHeader)暗証番号1による認証..."
+                    self.publishLog("## 暗証番号1による認証")
                     try ap.verifyPin1(self.pin1!)
+                    self.publishLog("成功\n")
+                    session.alertMessage += "成功"
                 } catch let jeidError as JeidError {
                     switch jeidError {
                     case .invalidPin:
                         session.invalidate(errorMessage: "\(msgErrorHeader)認証失敗(暗証番号1)")
+                        self.publishLog("失敗\n")
                         self.handleInvalidPinError(jeidError, 1)
                         return
                     default:
@@ -130,11 +135,16 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
 
                 if (self.pin2 != nil && !self.pin2!.isEmpty) {
                     do {
+                        session.alertMessage = "\(msgReadingHeader)暗証番号2による認証..."
+                        self.publishLog("## 暗証番号2による認証")
                         try ap.verifyPin2(self.pin2!)
+                        self.publishLog("成功\n")
+                        session.alertMessage += "成功"
                     } catch let jeidError as JeidError {
                         switch jeidError {
                         case .invalidPin:
                             session.invalidate(errorMessage: "\(msgErrorHeader)認証失敗(暗証番号2)")
+                            self.publishLog("失敗\n")
                             self.handleInvalidPinError(jeidError, 2)
                             return
                         default:

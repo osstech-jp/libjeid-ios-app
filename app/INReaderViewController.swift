@@ -100,11 +100,16 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("## 券面入力補助APから情報を取得します")
                 let textAp = try reader.selectINText()
                 do {
+                    session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
+                    self.publishLog("### 暗証番号による認証")
                     try textAp.verifyPin(self.pin!)
+                    self.publishLog("成功\n")
+                    session.alertMessage += "成功"
                 } catch let jeidError as JeidError {
                     switch jeidError {
                     case .invalidPin:
                         session.invalidate(errorMessage: "\(msgErrorHeader)認証失敗")
+                        self.publishLog("失敗\n")
                         self.handleInvalidPinError(jeidError)
                         return
                     default:
@@ -143,7 +148,9 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("## 券面APから情報を取得します")
                 let visualAp = try reader.selectINVisual()
                 session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
+                self.publishLog("### 暗証番号による認証")
                 try visualAp.verifyPin(self.pin!)
+                self.publishLog("成功\n")
                 session.alertMessage += "成功"
                 session.alertMessage = "\(msgReadingHeader)券面AP内の情報..."
                 let visualFiles = try visualAp.readFiles()
