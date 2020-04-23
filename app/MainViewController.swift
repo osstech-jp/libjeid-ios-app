@@ -19,6 +19,7 @@ class MainViewController: CustomViewController {
         mainView = MainView(frame: self.view.frame)
         mainView.inButton.addTarget(self, action: #selector(pushInButton), for: .touchUpInside)
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
+        mainView.rcButton.addTarget(self, action: #selector(pushRcButton), for: .touchUpInside)
         mainView.pinButton.addTarget(self, action: #selector(pushPinButton), for: .touchUpInside)
 
         let wrapperView = CustomWrapperView(self.view.frame, mainView)
@@ -35,6 +36,11 @@ class MainViewController: CustomViewController {
 
     @objc func pushDlButton(sender: UIButton){
         let nextViewController = DLReaderViewController()
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+
+    @objc func pushRcButton(sender: UIButton){
+        let nextViewController = RCReaderViewController()
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
