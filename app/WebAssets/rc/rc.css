@@ -1,0 +1,448 @@
+
+* {
+  margin : 0;
+  padding : 0;
+}
+
+body {
+  font-size: medium;
+}
+
+h1 {
+  margin: 2px;
+  padding: 2px;
+}
+
+hr {
+  border: 0px;
+  border-bottom: 1px solid #000000;
+}
+
+.rc-block {
+  display: block;
+  width: 620px;
+  margin: 0px;
+  padding: 10px;
+  word-wrap: break-word;
+}
+
+.rc-entries {
+  display: block;
+  position: relative;
+  width: 638px;
+  min-height: 401px;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 10px;
+  border: 1px solid #aaaaaa;
+  font-size: 20px;
+  font-family: "Noto Sans"
+}
+
+img.rc-card-front {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 10px;
+}
+
+img.rc-photo {
+  display: block;
+  position: absolute;
+  top: 118px;
+  left: 455px;
+  width: 174px;
+  height: 225px;
+  border: 1px solid #AAAAAA;
+}
+
+img.rc-photo.img-exists {
+  height: auto;
+  max-height:225px;
+  border: 0px;
+}
+
+img.rc-moj {
+  display: block;
+  position: absolute;;
+  width: 80px;
+  height: auto;
+  opacity: 0.6;
+}
+
+img.rc-moj.type-rc {
+  top: 303px;
+  left: 360px;
+}
+
+img.rc-moj.type-sprc {
+  top: 180px;
+  left: 360px;
+}
+
+.rc-minister-of-justice {
+  position: absolute;
+  top: 362px;
+  left: 485px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 20px;
+  letter-spacing: 1px;
+}
+
+.rc-labels-wrapper {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.rc-header {
+  display: block;
+  position: absolute;
+  top: 14px;
+  left: 0px;
+  width: 100%;
+  height: 35px;
+}
+
+.rc-header.type-rc {
+  background-color: rgba(0,180,255,0.25);
+}
+
+.rc-header.type-sprc {
+  top: 18px;
+  background-color: rgba(255, 235, 10 ,0.25);
+}
+
+.rc-government-wrapper {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  height: 100%;
+  font-size: 0;
+}
+
+.rc-government-jp {
+  display: block;
+  position: static;
+  display: block;
+  height: 20px;
+  margin-top: 1px;
+  font-size: 20px;
+  white-space: nowrap;
+  line-height: 20px;
+  letter-spacing: 2px;
+}
+
+.rc-government-en {
+  display: block;
+  position: static;
+  display: block;
+  height: 14px;
+  margin-top: 2px;
+  margin-left: 2px;
+  font-size: 14px;
+  white-space: nowrap;
+  line-height: 14px;
+  letter-spacing: -1px;
+  word-spacing: -2px;
+  font-family: monospace;
+}
+
+.rc-card-name-wrapper {
+  display: inline-block;
+  position: static;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 0;
+}
+
+.rc-card-name-jp {
+  display: block;
+  position: static;
+  height: 24px;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 24px;
+}
+
+.rc-card-name-jp.type-rc {
+  letter-spacing: 5px;
+}
+
+.rc-card-name-jp.type-sprc {
+  letter-spacing: 0px;
+}
+
+.rc-card-name-en {
+  display: block;
+  position: static;
+  display: block;
+  height: 11px;
+  white-space: nowrap;
+  line-height: 12px;
+  letter-spacing: -1px;
+  word-spacing: -2px;
+  font-family: monospace;
+}
+
+.rc-card-name-en.type-rc {
+  margin-left: -18px;
+  font-size: 14px;
+}
+
+.rc-card-name-en.type-sprc {
+  font-size: 13px;
+}
+
+.rc-number-wrapper {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  font-size: 0;
+}
+
+.rc-number-wrapper.type-rc {
+  top: 0px;
+  right: 155px;
+}
+
+.rc-number-wrapper.type-sprc {
+  top: 0px;
+  right: 148px;
+}
+
+.rc-number-jp {
+  display: block;
+  position: static;
+  display: block;
+  height: 18px;
+  margin-top: 7px;
+  font-size: 18px;
+  white-space: nowrap;
+  line-height: 18px;
+  letter-spacing: 1px;
+}
+
+.rc-number-en {
+  display: block;
+  position: static;
+  display: block;
+  height: 14px;
+  font-size: 14px;
+  white-space: nowrap;
+  line-height: 14px;
+  letter-spacing: -1px;
+  font-family: monospace;
+}
+
+.rc-number-en.type-rc {
+  float: right;
+  margin: 0px;
+  margin-top: -2px;
+  margin-right: 2px;
+}
+
+.rc-number-en.type-sprc {
+  float: none;
+  margin: 0px;
+  margin-top: -2px;
+  margin-left: 2px;
+  text-align: center;
+}
+
+.rc-label-jp {
+  display: block;
+  position: static;
+  height: 14px;
+  margin: 0px;
+  font-size: 14px;
+  white-space: nowrap;
+  line-height: 14px;
+  letter-spacing: 0px;
+}
+
+.rc-label-en {
+  display: block;
+  position: static;
+  height: 13px;
+  margin-top: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+  line-height: 13px;
+  letter-spacing: -1px;
+  word-spacing: -1px;
+  font-family: monospace;
+}
+
+.rc-label-en.center {
+  text-align: center;
+}
+
+.rc-label-set-wrapper {
+  display: inline-block;
+  position: absolute;
+  font-size: 0;
+}
+
+.rc-label-set-wrapper.rc-name {
+  top: 59px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-date-of-birth {
+  top: 102px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-sex {
+  top: 102px;
+  left: 237px;
+}
+
+.rc-label-set-wrapper.rc-nationality {
+  top: 102px;
+  left: 317px;
+}
+
+.rc-label-set-wrapper.rc-address {
+  top: 146px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-status {
+  top: 188px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-employment-restriction {
+  top: 208px;
+  left: 161px;
+  width: 283px;
+  height: 48px;
+  background-color: rgba(0,180,255,0.25);
+}
+
+.rc-label-jp.rc-employment-restriction {
+  display: inline-block;
+  position: static;
+  height: 100%;
+  margin-left: 2px;
+  margin-top: 19px;
+}
+
+.rc-label-set-wrapper.rc-period-of-stay {
+  top: 254px;
+  left: 17px;
+}
+
+.rc-label-en.rc-period-of-stay {
+  margin-top: 2px;
+  line-height: 14px;
+}
+
+.rc-label-set-wrapper.rc-kind-of-permission {
+  top: 309px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-date-of-approval {
+  top: 335px;
+  left: 17px;
+}
+
+.rc-label-set-wrapper.rc-date-of-issue {
+  top: 335px;
+  left: 228px;
+}
+
+.rc-label-set-wrapper.rc-period-of-validity {
+  top: 356px;
+  left: 0px;
+  width: 465px;
+  height: 30px;
+  background-color: rgba(0,180,255,0.25);
+}
+
+.rc-label-jp.rc-period-of-validity-prefix {
+  position: absolute;
+  top: 9px;
+  left: 15px;
+}
+
+.rc-label-jp.rc-period-of-validity-suffix {
+  position: absolute;
+  top: 9px;
+  right: 4px;
+}
+
+.rc-label-set-wrapper.sprc-name {
+  top: 84px;
+  left: 20px;
+}
+
+.rc-label-set-wrapper.sprc-date-of-birth {
+  top: 135px;
+  left: 20px;
+}
+
+.rc-label-set-wrapper.sprc-sex {
+  top: 135px;
+  left: 306px;
+}
+
+.rc-label-set-wrapper.sprc-nationality {
+  top: 190px;
+  left: 20px;
+}
+
+.rc-label-set-wrapper.sprc-address {
+  top: 243px;
+  left: 20px;
+}
+
+.rc-label-set-wrapper.sprc-period-of-validity {
+  top: 307px;
+  left: 0px;
+  width: 450px;
+  height: 57px;
+  background-color: rgba(255, 235, 10 ,0.25);
+}
+
+.rc-label-jp.sprc-period-of-validity-prefix {
+  position: absolute;
+  top: 22px;
+  left: 15px;
+}
+
+.rc-label-jp.sprc-period-of-validity-suffix {
+  position: absolute;
+  top: 22px;
+  right: -2px;
+}
+
+table.rc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.rc-table td {
+  padding: 4px;
+  border: 1px solid #000000;
+  background-color: #fff;
+}
