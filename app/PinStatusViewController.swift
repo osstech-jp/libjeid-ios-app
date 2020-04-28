@@ -104,6 +104,18 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
                     self.publishLog(msg)
                 case .JUKI:
                     self.publishLog("カード種別: 住基カード")
+                case .RC:
+                    let ap = try reader.selectRC()
+                    let freeFiles = try ap.readFiles()
+                    let cardType = try freeFiles.getCardType()
+                    switch cardType.type {
+                    case "1":
+                        self.publishLog("カード種別: 在留カード")
+                    case "2":
+                        self.publishLog("カード種別: 特別永住者証明書")
+                    default:
+                        self.publishLog("カード種別: 在留カード等(不明)")
+                    }
                 default:
                     self.publishLog("カード種別: 不明")
                 }
