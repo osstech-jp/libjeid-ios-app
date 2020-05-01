@@ -17,19 +17,18 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
     var session: NFCTagReaderSession?
     private var pin: String?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         self.title = "マイナンバーカードリーダー"
-        inReaderView = INReaderView(frame: self.view.frame)
+        inReaderView = INReaderView()
         pinField = inReaderView.pinField
         pinField.delegate = self
         inReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(self.view.frame, inReaderView)
+        let wrapperView = CustomWrapperView(inReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
-        self.view.addSubview(wrapperView)
+        self.view = wrapperView
     }
 
     @objc func pushStartButton(sender: UIButton){

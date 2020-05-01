@@ -11,22 +11,21 @@ import UIKit
 class MainViewController: CustomViewController {
     var mainView: MainView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as! String
         let bundleShortVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         self.title = bundleName + " " + bundleShortVersion
-        mainView = MainView(frame: self.view.frame)
+        mainView = MainView()
         mainView.inButton.addTarget(self, action: #selector(pushInButton), for: .touchUpInside)
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
         mainView.rcButton.addTarget(self, action: #selector(pushRcButton), for: .touchUpInside)
         mainView.pinButton.addTarget(self, action: #selector(pushPinButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(self.view.frame, mainView)
+        let wrapperView = CustomWrapperView(mainView)
         scrollView = wrapperView.scrollView
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         wrapperView.logView.isHidden = true
-        self.view.addSubview(wrapperView)
+        self.view = wrapperView
     }
 
     @objc func pushInButton(sender: UIButton){

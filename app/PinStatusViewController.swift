@@ -14,17 +14,16 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
     var pinStatusView: PinStatusView!
     var session: NFCTagReaderSession?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         self.title = "暗証番号ステータス"
-        pinStatusView = PinStatusView(frame: self.view.frame)
+        pinStatusView = PinStatusView()
         pinStatusView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(self.view.frame, pinStatusView)
+        let wrapperView = CustomWrapperView(pinStatusView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
-        self.view.addSubview(wrapperView)
+        self.view = wrapperView
     }
 
     @objc func pushStartButton(sender: UIButton){

@@ -17,19 +17,18 @@ class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
     var session: NFCTagReaderSession?
     private var number: String?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         self.title = "在留カードリーダー"
-        rcReaderView = RCReaderView(frame: self.view.frame)
+        rcReaderView = RCReaderView()
         numberField = rcReaderView.numberField
         numberField.delegate = self
         rcReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(self.view.frame, rcReaderView)
+        let wrapperView = CustomWrapperView(rcReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
-        self.view.addSubview(wrapperView)
+        self.view = wrapperView
     }
 
     @objc func pushStartButton(sender: UIButton){

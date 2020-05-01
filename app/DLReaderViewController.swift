@@ -19,21 +19,20 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
     private var pin1: String?
     private var pin2: String?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
         self.title = "運転免許証リーダー"
-        dlReaderView = DLReaderView(frame: self.view.frame)
+        dlReaderView = DLReaderView()
         pin1Field = dlReaderView.pin1Field
         pin1Field.delegate = self
         pin2Field = dlReaderView.pin2Field
         pin2Field.delegate = self
         dlReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(self.view.frame, dlReaderView)
+        let wrapperView = CustomWrapperView(dlReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
-        self.view.addSubview(wrapperView)
+        self.view = wrapperView
     }
 
     @objc func pushStartButton(sender: UIButton){
