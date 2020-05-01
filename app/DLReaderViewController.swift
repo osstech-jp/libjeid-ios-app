@@ -66,10 +66,18 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
 
     func tagReaderSession(_ session: NFCTagReaderSession,
                           didInvalidateWithError error: Error) {
-        if (error as NSError).code != 200 {
+        if let nfcError = error as? NFCReaderError {
+            if nfcError.code != .readerSessionInvalidationErrorUserCanceled {
+                print("tagReaderSession error: " + nfcError.localizedDescription)
+                self.publishLog("エラー: " + nfcError.localizedDescription)
+                if nfcError.code == .readerSessionInvalidationErrorSessionTerminatedUnexpectedly {
+                    self.publishLog("しばらく待ってから再度お試しください")
+                }
+            }
+        } else {
             print("tagReaderSession error: " + error.localizedDescription)
-            session.alertMessage = "error"
         }
+        self.session = nil
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession,
