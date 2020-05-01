@@ -16,7 +16,7 @@ class CustomWrapperView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(_ frame: CGRect, _ view: UIView) {
+    init(_ view: UIView) {
         let stackView = CustomViewUtil.createVerticalStackView(UIScreen.main.bounds.size)
         logView = CustomViewUtil.createLogView(UIScreen.main.bounds.size)
         stackView.addArrangedSubview(view)
@@ -24,7 +24,7 @@ class CustomWrapperView: UIView {
 
         scrollView = UIScrollView()
         scrollView.addSubview(stackView)
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(scrollView)
         self.backgroundColor = CustomColor.background
 

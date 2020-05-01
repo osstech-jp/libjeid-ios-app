@@ -16,7 +16,7 @@ class INReaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init() {
         let explanation = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         explanation.text = "マイナンバーカードの券面事項を表示します。\n"
                            + "読み取り開始ボタンを押下後、端末をカードにかざしてください。"
@@ -40,7 +40,7 @@ class INReaderView: UIView {
         stackView.addArrangedSubview(pinStackView)
         stackView.addArrangedSubview(startButton)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(stackView)
 
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true

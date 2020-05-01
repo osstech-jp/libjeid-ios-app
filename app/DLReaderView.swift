@@ -17,7 +17,7 @@ class DLReaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init() {
         let explanation = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         explanation.text = "読み取り開始ボタンを押下後、端末を免許証にかざしてください。\n"
                            + "暗証番号2は省略可能です。その場合、顔写真および本籍は表示されません。"
@@ -52,7 +52,7 @@ class DLReaderView: UIView {
         stackView.addArrangedSubview(pin2StackView)
         stackView.addArrangedSubview(startButton)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(stackView)
 
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true

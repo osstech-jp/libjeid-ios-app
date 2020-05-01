@@ -19,7 +19,7 @@ class MainView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init() {
         inButton = CustomViewUtil.createButton(UIScreen.main.bounds.size)
         inButton.setTitle("マイナンバーカード", for: .normal)
 
@@ -43,7 +43,7 @@ class MainView: UIView {
         stackView.addArrangedSubview(rcButton)
         stackView.addArrangedSubview(pinButton)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(stackView)
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true

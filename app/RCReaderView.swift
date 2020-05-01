@@ -16,7 +16,7 @@ class RCReaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init() {
         let explanation = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         explanation.text = "読み取り開始ボタンを押下後、端末をカードにかざしてください。\n"
             + "在留カードおよび特別永住者証明書に対応しています。"
@@ -39,7 +39,7 @@ class RCReaderView: UIView {
         stackView.addArrangedSubview(pin1StackView)
         stackView.addArrangedSubview(startButton)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(stackView)
 
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true

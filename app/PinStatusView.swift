@@ -15,7 +15,7 @@ class PinStatusView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(frame: CGRect) {
+    init() {
         let explanation = CustomViewUtil.createTextView(UIScreen.main.bounds.size)
         explanation.text = "暗証番号ステータスを表示します。\n"
                          + "運転免許証およびマイナンバーカードに対応しています。\n"
@@ -28,7 +28,7 @@ class PinStatusView: UIView {
         stackView.addArrangedSubview(explanation)
         stackView.addArrangedSubview(startButton)
 
-        super.init(frame: frame)
+        super.init(frame: .zero)
         self.addSubview(stackView)
 
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
