@@ -2,7 +2,7 @@
 //  CustomWrapperView.swift
 //  libjeid-ios-app
 //
-//  Copyright © 2019 Open Source Solution Technology Corporation
+//  Copyright © 2019-2020 Open Source Solution Technology Corporation
 //  All rights reserved.
 //
 
@@ -23,6 +23,7 @@ class CustomWrapperView: UIView {
         stackView.addArrangedSubview(logView)
 
         scrollView = UIScrollView()
+        scrollView.delaysContentTouches = false
         scrollView.addSubview(stackView)
         super.init(frame: .zero)
         self.addSubview(scrollView)
