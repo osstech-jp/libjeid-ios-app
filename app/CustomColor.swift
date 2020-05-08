@@ -11,23 +11,28 @@ import UIKit
 class CustomColor {
 
     static var text: UIColor  {
-        return dynamicColor(light: createUIColor(hex: 0x1A1A1D, alpha: 1.0),
-                            dark: createUIColor(hex: 0xE5E5EA, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0x1C1C1E, alpha: 1.0),
+                            dark: createUIColor(hex: 0xF2F2F7, alpha: 1.0))
     }
 
     static var background: UIColor  {
-        return dynamicColor(light: createUIColor(hex: 0xFDFDFF, alpha: 1.0),
-                            dark: createUIColor(hex: 0x1C1C20, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0xFFFFFF, alpha: 1.0),
+                            dark: createUIColor(hex: 0x1C1C1E, alpha: 1.0))
     }
 
     static var buttonTitle: UIColor  {
-        return dynamicColor(light: createUIColor(hex: 0x1A1A1D, alpha: 1.0),
-                            dark: createUIColor(hex: 0xD1D1D8, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0x1C1C1E, alpha: 1.0),
+                            dark: createUIColor(hex: 0xEBEBF5, alpha: 1.0))
     }
 
     static var buttonBackground: UIColor  {
-        return dynamicColor(light: createUIColor(hex: 0xC7C7CC, alpha: 1.0),
-                            dark: createUIColor(hex: 0x606066, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0xD1D1D6, alpha: 1.0),
+                            dark: createUIColor(hex: 0x3A3A3C, alpha: 1.0))
+    }
+
+    static var buttonHighlightedBackground: UIColor  {
+        return dynamicColor(light: createUIColor(hex: 0x8E8E93, alpha: 1.0),
+                            dark: createUIColor(hex: 0x636366, alpha: 1.0))
     }
 
     static var textFieldText: UIColor  {
@@ -35,13 +40,13 @@ class CustomColor {
     }
 
     static var textFieldBackground: UIColor  {
-        return dynamicColor(light: UIColor.clear,
-                            dark: createUIColor(hex: 0x333336, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0xFFFFFF, alpha: 1.0),
+                            dark: createUIColor(hex: 0x2C2C2E, alpha: 1.0))
     }
 
     static var textFieldBorder: UIColor  {
-        return dynamicColor(light: createUIColor(hex: 0x66666A, alpha: 1.0),
-                            dark: createUIColor(hex: 0x808084, alpha: 1.0))
+        return dynamicColor(light: createUIColor(hex: 0x636366, alpha: 1.0),
+                            dark: createUIColor(hex: 0x8E8E93, alpha: 1.0))
     }
 
     private class func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {

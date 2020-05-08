@@ -2,7 +2,7 @@
 //  CustomViewUtil.swift
 //  libjeid-ios-app
 //
-//  Copyright © 2019 Open Source Solution Technology Corporation
+//  Copyright © 2019-2020 Open Source Solution Technology Corporation
 //  All rights reserved.
 //
 
@@ -22,9 +22,11 @@ class CustomViewUtil: UIView {
     }
 
     static func createButton(_ size: CGSize) -> UIButton {
-        let button = UIButton(type: .system)
-        button.tintColor = CustomColor.buttonTitle
+        let button = CustomButton(type: .custom)
         button.backgroundColor = CustomColor.buttonBackground
+        button.highlightedBackgroundColor = CustomColor.buttonHighlightedBackground
+        button.setTitleColor(CustomColor.buttonTitle, for: .normal)
+        button.setTitleColor(CustomColor.buttonTitle, for: .highlighted)
         let fontSize = CGFloat(min(size.width, size.height) / BUTTON_LABEL_FONT_SIZE_DENOMINATOR)
         button.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
         button.translatesAutoresizingMaskIntoConstraints = false
