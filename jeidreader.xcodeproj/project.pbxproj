@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E06841E230BE271002F7BB7 /* WebAssets in Resources */ = {isa = PBXBuildFile; fileRef = 3E068419230BE270002F7BB7 /* WebAssets */; };
 		3E113E7D230E8DF2001E2AEB /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E113E7C230E8DF2001E2AEB /* CustomColor.swift */; };
+		3E45A3A3246555DE00681AD9 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E45A3A2246555DE00681AD9 /* CustomButton.swift */; };
 		3E495619236BE8C200A61ED3 /* CustomWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */; };
 		3E49561B236C49DB00A61ED3 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E49561A236C49DB00A61ED3 /* CustomViewController.swift */; };
 		3E4A674E23693AD600B57F30 /* CustomViewUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		3E068419230BE270002F7BB7 /* WebAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WebAssets; sourceTree = "<group>"; };
 		3E113E7C230E8DF2001E2AEB /* CustomColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		3E45A3A2246555DE00681AD9 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWrapperView.swift; sourceTree = "<group>"; };
 		3E49561A236C49DB00A61ED3 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewUtil.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				FBB68B3722F4267A00042971 /* AppDelegate.swift */,
+				3E45A3A2246555DE00681AD9 /* CustomButton.swift */,
 				3E113E7C230E8DF2001E2AEB /* CustomColor.swift */,
 				3E49561A236C49DB00A61ED3 /* CustomViewController.swift */,
 				3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */,
@@ -206,6 +209,7 @@
 			files = (
 				3E5B941B24504458005BE553 /* RCReaderView.swift in Sources */,
 				3E4EF865238F9CD400DF3747 /* PinStatusView.swift in Sources */,
+				3E45A3A3246555DE00681AD9 /* CustomButton.swift in Sources */,
 				FBB68B3C22F4267A00042971 /* MainViewController.swift in Sources */,
 				3E4A674E23693AD600B57F30 /* CustomViewUtil.swift in Sources */,
 				3E5B941D24504469005BE553 /* RCReaderViewController.swift in Sources */,
