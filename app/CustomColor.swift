@@ -20,7 +20,7 @@ class CustomColor {
                             dark: createUIColor(hex: 0x1C1C20, alpha: 1.0))
     }
 
-    static var buttonTint: UIColor  {
+    static var buttonTitle: UIColor  {
         return dynamicColor(light: createUIColor(hex: 0x1A1A1D, alpha: 1.0),
                             dark: createUIColor(hex: 0xD1D1D8, alpha: 1.0))
     }

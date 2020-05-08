@@ -23,7 +23,7 @@ class CustomViewUtil: UIView {
 
     static func createButton(_ size: CGSize) -> UIButton {
         let button = UIButton(type: .system)
-        button.tintColor = CustomColor.buttonTint
+        button.tintColor = CustomColor.buttonTitle
         button.backgroundColor = CustomColor.buttonBackground
         let fontSize = CGFloat(min(size.width, size.height) / BUTTON_LABEL_FONT_SIZE_DENOMINATOR)
         button.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
