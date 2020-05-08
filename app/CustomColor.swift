@@ -2,13 +2,13 @@
 //  CustomColor.swift
 //  libjeid-ios-app
 //
-//  Copyright © 2019 Open Source Solution Technology Corporation
+//  Copyright © 2019-2020 Open Source Solution Technology Corporation
 //  All rights reserved.
 //
 
 import UIKit
 
-class CustomColor: UIColor {
+class CustomColor {
 
     static var text: UIColor  {
         return dynamicColor(light: createUIColor(hex: 0x1A1A1D, alpha: 1.0),
