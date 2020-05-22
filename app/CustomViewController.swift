@@ -15,9 +15,15 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
     private var previousKeyboardHeight: CGFloat = CGFloat(0)
     private var previousScreenSize: CGSize!
     private var textFieldIsEditing: Bool = false
+    private var logFont: UIFont?
+    private var largeLogFont: UIFont?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let logView = logView {
+            logFont = logView.font
+        }
+        largeLogFont = CustomViewUtil.createMediumTextFont(UIScreen.main.bounds.size)
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -96,8 +102,19 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
     }
 
     func publishLog(_ text: String) {
+        publishLog(text, logFont)
+    }
+
+    func publishLargeLog(_ text: String) {
+        publishLog(text, largeLogFont)
+    }
+
+    private func publishLog(_ text: String, _ font: UIFont?) {
         DispatchQueue.main.async {
             if let logView = self.logView {
+                if logView.font != font {
+                    logView.font = font
+                }
                 logView.isEditable = true
                 logView.insertText(text + "\n")
                 logView.isEditable = false

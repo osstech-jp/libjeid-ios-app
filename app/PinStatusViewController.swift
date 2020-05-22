@@ -75,14 +75,14 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
             do {
                 self.clearPublishedLog()
                 let reader = try JeidReader(tag)
-                self.publishLog("# 暗証番号ステータスの読み取り開始")
+                self.publishLargeLog("# 暗証番号ステータスの読み取り開始")
                 print("thread: \(Thread.current)")
                 session.alertMessage = "\(msgReadingHeader)カード種別の判別..."
                 let cardType = try reader.detectCardType()
                 session.alertMessage += "成功"
                 switch cardType {
                 case .IN:
-                    self.publishLog("カード種別: マイナンバーカード")
+                    self.publishLargeLog("カード種別: マイナンバーカード")
                     session.alertMessage = "\(msgReadingHeader)暗証番号ステータスの取得..."
                     let textAp = try reader.selectINText()
                     let textPin = try textAp.getPin()
@@ -98,9 +98,9 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
                     session.alertMessage += "成功"
                     msg += "券面AP 暗証番号A: \(visualPinA)\n"
                     msg += "券面AP 暗証番号B: \(visualPinB)"
-                    self.publishLog(msg)
+                    self.publishLargeLog(msg)
                 case .DL:
-                    self.publishLog("カード種別: 運転免許証")
+                    self.publishLargeLog("カード種別: 運転免許証")
                     let ap = try reader.selectDL()
                     session.alertMessage = "\(msgReadingHeader)暗証番号ステータスの取得..."
                     let pin1 = try ap.getPin1()
@@ -108,23 +108,23 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
                     session.alertMessage += "成功"
                     var msg = "暗証番号1: \(pin1)\n"
                     msg += "暗証番号2: \(pin2)"
-                    self.publishLog(msg)
+                    self.publishLargeLog(msg)
                 case .JUKI:
-                    self.publishLog("カード種別: 住基カード")
+                    self.publishLargeLog("カード種別: 住基カード")
                 case .RC:
                     let ap = try reader.selectRC()
                     let freeFiles = try ap.readFiles()
                     let cardType = try freeFiles.getCardType()
                     switch cardType.type {
                     case "1":
-                        self.publishLog("カード種別: 在留カード")
+                        self.publishLargeLog("カード種別: 在留カード")
                     case "2":
-                        self.publishLog("カード種別: 特別永住者証明書")
+                        self.publishLargeLog("カード種別: 特別永住者証明書")
                     default:
-                        self.publishLog("カード種別: 在留カード等(不明)")
+                        self.publishLargeLog("カード種別: 在留カード等(不明)")
                     }
                 default:
-                    self.publishLog("カード種別: 不明")
+                    self.publishLargeLog("カード種別: 不明")
                 }
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
