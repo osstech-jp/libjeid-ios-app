@@ -152,6 +152,11 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     dataDict["cardinfo-addr"] = address
                 }
 
+                self.publishLog("### 券面入力補助APの真正性検証")
+                let textApValidationResult = try textFiles.validate()
+                self.publishLog(textApValidationResult.description + "\n")
+                dataDict["textap-validation-result"] = textApValidationResult.isValid
+
                 self.publishLog("## 券面APから情報を取得します")
                 let visualAp = try reader.selectINVisual()
                 session.alertMessage = "\(msgReadingHeader)暗証番号による認証..."
@@ -192,6 +197,11 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                     let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
                     dataDict["cardinfo-mynumber-image"] = src
                 }
+
+                self.publishLog("### 券面APの真正性検証")
+                let visualApValidationResult = try visualFiles.validate()
+                self.publishLog(visualApValidationResult.description + "\n")
+                dataDict["visualap-validation-result"] = visualApValidationResult.isValid
 
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
