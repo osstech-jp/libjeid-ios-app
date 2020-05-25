@@ -220,7 +220,7 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 var jsonStr: String? = String(bytes: jsonData, encoding: .utf8)
                 jsonStr = jsonStr?.replacingOccurrences(of: "\\\"", with: "\\\\\"")
 
-                let path = Bundle.main.path(forResource: "cardinfo", ofType: "html", inDirectory: "WebAssets/cardinfo")!
+                let path = Bundle.main.path(forResource: "in", ofType: "html", inDirectory: "WebAssets/in")!
                 let localHtmlUrl = URL(fileURLWithPath: path, isDirectory: false)
                 let webViewController = WebViewController(localHtmlUrl, "render(\'\(jsonStr!)\');")
                 webViewController.title = "マイナンバーカードビューア"
