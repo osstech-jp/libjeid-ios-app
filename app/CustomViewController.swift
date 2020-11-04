@@ -18,6 +18,9 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
     private var logFont: UIFont?
     private var largeLogFont: UIFont?
 
+    internal static let ACTIVE_ALPHA = CGFloat(1.0)
+    internal static let INACTIVE_ALPHA = CGFloat(0.5)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if let logView = logView {

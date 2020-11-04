@@ -53,9 +53,15 @@ class EPReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
             self.openAlertView("エラー", "お使いの端末はNFCに対応していません。")
             return
         }
-        self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
-        self.session?.alertMessage = "パスポートに端末をかざしてください"
-        self.session?.begin()
+        self.clearPublishedLog()
+        if let _ = self.session {
+            publishLog("しばらく待ってから再度お試しください")
+        } else {
+            self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
+            self.session?.alertMessage = "パスポートに端末をかざしてください"
+            self.session?.begin()
+            self.epReaderView.startButton.alpha = Self.INACTIVE_ALPHA
+        }
     }
 
     func textField(_ textField: UITextField,
@@ -88,6 +94,9 @@ class EPReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
             print("tagReaderSession error: " + error.localizedDescription)
         }
         self.session = nil
+        DispatchQueue.main.async {
+            self.epReaderView.startButton.alpha = Self.ACTIVE_ALPHA
+        }
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession,

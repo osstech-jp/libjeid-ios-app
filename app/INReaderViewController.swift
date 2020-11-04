@@ -41,9 +41,15 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
             self.openAlertView("エラー", "お使いの端末はNFCに対応していません。")
             return
         }
-        self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
-        self.session?.alertMessage = "カードに端末をかざしてください"
-        self.session?.begin()
+        self.clearPublishedLog()
+        if let _ = self.session {
+            publishLog("しばらく待ってから再度お試しください")
+        } else {
+            self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
+            self.session?.alertMessage = "カードに端末をかざしてください"
+            self.session?.begin()
+            self.inReaderView.startButton.alpha = Self.INACTIVE_ALPHA
+        }
     }
 
     func textField(_ textField: UITextField,
@@ -72,6 +78,9 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
             print("tagReaderSession error: " + error.localizedDescription)
         }
         self.session = nil
+        DispatchQueue.main.async {
+            self.inReaderView.startButton.alpha = Self.ACTIVE_ALPHA
+        }
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession,
@@ -88,13 +97,13 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 return
             }
             do {
-                self.clearPublishedLog()
                 if (self.pin == nil || self.pin!.isEmpty || self.pin!.count != 4) {
                     self.publishLog("4桁の暗証番号を入力してください")
                     session.invalidate(errorMessage: "\(msgErrorHeader)暗証番号が入力されていません")
                     return
                 }
                 let reader = try JeidReader(tag)
+                self.clearPublishedLog()
                 session.alertMessage = "読み取り開始..."
                 let cardType = try reader.detectCardType()
                 if (cardType != CardType.IN) {

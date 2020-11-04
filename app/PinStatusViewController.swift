@@ -35,9 +35,15 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
             self.openAlertView("エラー", "お使いの端末はNFCに対応していません。")
             return
         }
-        self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
-        self.session?.alertMessage = "カードに端末をかざしてください"
-        self.session?.begin()
+        self.clearPublishedLog()
+        if let _ = self.session {
+            publishLog("しばらく待ってから再度お試しください")
+        } else {
+            self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
+            self.session?.alertMessage = "カードに端末をかざしてください"
+            self.session?.begin()
+            self.pinStatusView.startButton.alpha = Self.INACTIVE_ALPHA
+        }
     }
 
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
@@ -58,6 +64,9 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
             print("tagReaderSession error: " + error.localizedDescription)
         }
         self.session = nil
+        DispatchQueue.main.async {
+            self.pinStatusView.startButton.alpha = Self.ACTIVE_ALPHA
+        }
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession,
@@ -73,8 +82,8 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
                 return
             }
             do {
-                self.clearPublishedLog()
                 let reader = try JeidReader(tag)
+                self.clearPublishedLog()
                 self.publishLargeLog("# 暗証番号ステータスの読み取り開始")
                 print("thread: \(Thread.current)")
                 session.alertMessage = "\(msgReadingHeader)カード種別の判別..."
