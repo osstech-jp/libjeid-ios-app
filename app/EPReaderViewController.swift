@@ -1,0 +1,257 @@
+//
+//  EPReaderViewController.swift
+//  libjeid-ios-app
+//
+//  Copyright © 2020 Open Source Solution Technology Corporation
+//  All rights reserved.
+//
+
+import CoreNFC
+import UIKit
+import libjeid
+
+class EPReaderViewController: CustomViewController, NFCTagReaderSessionDelegate {
+    let MAX_NUMBER_LENGTH: Int = 9
+    let MAX_DATE_LENGTH: Int = 8
+    var epReaderView: EPReaderView!
+    var numberField: UITextField!
+    var birthDateField: UITextField!
+    var expireDateField: UITextField!
+    var session: NFCTagReaderSession?
+    private var number: String?
+    private var birthDate: String?
+    private var expireDate: String?
+
+    override func loadView() {
+        self.title = "パスポートリーダー"
+        epReaderView = EPReaderView()
+        numberField = epReaderView.numberField
+        numberField.delegate = self
+        birthDateField = epReaderView.birthDateField
+        birthDateField.delegate = self
+        expireDateField = epReaderView.expireDateField
+        expireDateField.delegate = self
+        
+        epReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
+
+        let wrapperView = CustomWrapperView(epReaderView)
+        wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        logView = wrapperView.logView
+        scrollView = wrapperView.scrollView
+        self.view = wrapperView
+    }
+
+    @objc func pushStartButton(sender: UIButton){
+        print("startButton pushed")
+        self.number = self.numberField!.text
+        self.birthDate = self.birthDateField!.text
+        self.expireDate = self.expireDateField!.text
+        if let activeField = self.activeField {
+            activeField.resignFirstResponder()
+        }
+        if (!NFCReaderSession.readingAvailable) {
+            self.openAlertView("エラー", "お使いの端末はNFCに対応していません。")
+            return
+        }
+        self.session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: DispatchQueue.global())
+        self.session?.alertMessage = "パスポートに端末をかざしてください"
+        self.session?.begin()
+    }
+
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        let currentStr: NSString = textField.text! as NSString
+        let newStr: NSString = currentStr.replacingCharacters(in: range, with: string) as NSString
+        if textField == self.numberField {
+            return newStr.length <= MAX_NUMBER_LENGTH
+        } else {
+            return newStr.length <= MAX_DATE_LENGTH
+        }
+    }
+
+    func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
+        print("tagReaderSessionDidBecomeActive: \(Thread.current)")
+    }
+
+    func tagReaderSession(_ session: NFCTagReaderSession,
+                          didInvalidateWithError error: Error) {
+        if let nfcError = error as? NFCReaderError {
+            if nfcError.code != .readerSessionInvalidationErrorUserCanceled {
+                print("tagReaderSession error: " + nfcError.localizedDescription)
+                self.publishLog("エラー: " + nfcError.localizedDescription)
+                if nfcError.code == .readerSessionInvalidationErrorSessionTerminatedUnexpectedly {
+                    self.publishLog("しばらく待ってから再度お試しください")
+                }
+            }
+        } else {
+            print("tagReaderSession error: " + error.localizedDescription)
+        }
+        self.session = nil
+    }
+
+    func tagReaderSession(_ session: NFCTagReaderSession,
+                          didDetect tags: [NFCTag]) {
+        let msgReadingHeader = "読み取り中\n"
+        let msgErrorHeader = "エラー\n"
+        print("reader session thread: \(Thread.current)")
+        let tag = tags.first!
+        session.connect(to: tag) { (error: Error?) in
+            print("connect thread: \(Thread.current)")
+            if error != nil {
+                print(error!)
+                session.invalidate(errorMessage: "connect error")
+                return
+            }
+            do {
+                let reader = try JeidReader(tag)
+                self.clearPublishedLog()
+                session.alertMessage = "読み取り開始..."
+                let type = try reader.detectCardType()
+                if (type != CardType.EP) {
+                    self.publishLog("パスポートではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)パスポートではありません")
+                    return
+                }
+                self.publishLog("# パスポートの読み取り開始")
+                print("thread: \(Thread.current)")
+                let ap = try reader.selectEP()
+                if (self.number == nil || self.number!.isEmpty) {
+                    self.publishLog("パスポート番号を入力してください")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)パスポート番号が入力されていません")
+                    return
+                }
+                if (self.number!.count != self.MAX_NUMBER_LENGTH) {
+                    self.publishLog("パスポート番号が9文字ではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)パスポート番号が9文字ではありません")
+                    return
+                }
+                if (self.birthDate == nil || self.birthDate!.isEmpty) {
+                    self.publishLog("生年月日を入力してください")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)生年月日が入力されていません")
+                    return
+                }
+                let birthDate = self.birthDate!
+                if (birthDate.count != self.MAX_DATE_LENGTH) {
+                    print(self.birthDate!.count)
+                    self.publishLog("生年月日が8桁ではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)生年月日が8桁ではありません")
+                    return
+                }
+                if (self.expireDate == nil || self.expireDate!.isEmpty) {
+                    self.publishLog("有効期限を入力してください")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)有効期限が入力されていません")
+                    return
+                }
+                let expireDate = self.expireDate!
+                if (expireDate.count != self.MAX_DATE_LENGTH) {
+                    self.publishLog("有効期限が8桁ではありません")
+                    session.invalidate(errorMessage: "\(msgErrorHeader)有効期限が8桁ではありません")
+                    return
+                }
+                do {
+                    let epKey = try EPKey(self.number!,
+                                          String(birthDate[birthDate.index(birthDate.startIndex, offsetBy: 2)..<birthDate.endIndex]),
+                                          String(expireDate[expireDate.index(expireDate.startIndex, offsetBy: 2)..<expireDate.endIndex]))
+                    session.alertMessage = "\(msgReadingHeader)BAC開始..."
+                    self.publishLog("## Basic Access Control開始")
+                    try ap.startBAC(epKey)
+                    self.publishLog("成功\n")
+                    session.alertMessage += "成功"
+                } catch let jeidError as JeidError {
+                    switch jeidError {
+                    case .invalidKey:
+                        session.invalidate(errorMessage: "\(msgErrorHeader)BAC失敗")
+                        self.publishLog("パスポート番号、生年月日または有効期限が間違っています\n")
+                        self.handleInvalidKeyError(jeidError)
+                        return
+                    default:
+                        throw jeidError
+                    }
+                }
+
+                session.alertMessage = "\(msgReadingHeader)ファイルの読み出し..."
+                let files = try ap.readFiles()
+                session.alertMessage += "成功"
+
+                var dataDict = Dictionary<String, Any>()
+                let commonData = try files.getCommonData()
+                self.publishLog("## Common Data")
+                self.publishLog(commonData.description)
+
+                let dg1 = try files.getDataGroup1()
+                self.publishLog("## Data Group1")
+                if let mrz = dg1.mrz {
+                    self.publishLog("\(mrz)\n")
+                    let dg1Mrz = try EPMRZ(mrz)
+                    if "JPN" != dg1Mrz.issuingCountry {
+                        session.invalidate(errorMessage: "\(msgErrorHeader)日本発行のパスポートではありません")
+                        self.publishLog("日本発行のパスポートではありません")
+                        return
+                    }
+                    dataDict["ep-type"] = dg1Mrz.documentCode
+                    dataDict["ep-issuing-country"] = dg1Mrz.issuingCountry
+                    dataDict["ep-passport-number"] = dg1Mrz.passportNumber
+                    dataDict["ep-surname"] = dg1Mrz.surname
+                    dataDict["ep-given-name"] = dg1Mrz.givenName
+                    dataDict["ep-nationality"] = dg1Mrz.nationality
+                    dataDict["ep-date-of-birth"] = dg1Mrz.birthDate
+                    dataDict["ep-sex"] = dg1Mrz.sex
+                    dataDict["ep-date-of-expirity"] = dg1Mrz.expirationDate
+                    dataDict["ep-mrz"] = dg1Mrz.mrz
+                }
+
+                let dg2 = try files.getDataGroup2()
+                if let jpeg = dg2.faceJpeg {
+                    let src = "data:image/jpeg;base64,\(jpeg.base64EncodedString())"
+                    dataDict["ep-photo"] = src
+                }
+
+                dataDict["ep-bac-result"] = true
+
+                self.publishLog("## Passive Authentication")
+                let paResult = try files.validate()
+                dataDict["ep-pa-result"] = paResult.isValid
+                self.publishLog("検証結果: \(paResult.isValid)\n")
+
+                session.alertMessage = "\(msgReadingHeader)Active Authentication..."
+                self.publishLog("## Active Authentication")
+                let aaResult = try ap.activeAuthentication(files)
+                dataDict["ep-aa-result"] = aaResult
+                self.publishLog("検証結果: \(aaResult)\n")
+
+                session.alertMessage = "読み取り完了"
+                session.invalidate()
+                self.openWebView(dataDict)
+            } catch {
+                session.invalidate(errorMessage: session.alertMessage + "失敗")
+                self.publishLog("\(error)")
+            }
+        }
+    }
+
+    func openWebView(_ dict: Dictionary<String, Any>) {
+        DispatchQueue.main.async {
+            do {
+                let jsonData: Data = try JSONSerialization.data(withJSONObject: dict, options: [])
+                var jsonStr: String? = String(bytes: jsonData, encoding: .utf8)
+                jsonStr = jsonStr?.replacingOccurrences(of: "\\\"", with: "\\\\\"")
+
+                let path = Bundle.main.path(forResource: "ep", ofType: "html", inDirectory: "WebAssets/ep")!
+                let localHtmlUrl = URL(fileURLWithPath: path, isDirectory: false)
+                let webViewController = WebViewController(localHtmlUrl, "render(\'\(jsonStr!)\');")
+                webViewController.title = "パスポートビューアー"
+                self.navigationController?.pushViewController(webViewController, animated: true)
+            } catch (let error) {
+                print(error)
+                return
+            }
+        }
+    }
+
+    func handleInvalidKeyError(_ jeidError: JeidError) {
+        let title = "入力情報が間違っています"
+        let message = "正しいパスポート番号、生年月日および有効期限を入力してください"
+        openAlertView(title, message)
+    }
+}
