@@ -18,6 +18,7 @@ class MainViewController: CustomViewController {
         mainView = MainView()
         mainView.inButton.addTarget(self, action: #selector(pushInButton), for: .touchUpInside)
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
+        mainView.epButton.addTarget(self, action: #selector(pushEpButton), for: .touchUpInside)
         mainView.rcButton.addTarget(self, action: #selector(pushRcButton), for: .touchUpInside)
         mainView.pinButton.addTarget(self, action: #selector(pushPinButton), for: .touchUpInside)
 
@@ -35,6 +36,11 @@ class MainViewController: CustomViewController {
 
     @objc func pushDlButton(sender: UIButton){
         let nextViewController = DLReaderViewController()
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+
+    @objc func pushEpButton(sender: UIButton){
+        let nextViewController = EPReaderViewController()
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 
