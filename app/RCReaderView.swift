@@ -26,6 +26,7 @@ class RCReaderView: UIView {
 
         numberField = CustomViewUtil.createTextField(UIScreen.main.bounds.size)
         numberField.keyboardType = UIKeyboardType.asciiCapable
+        numberField.autocapitalizationType = .allCharacters
 
         let pin1StackView = CustomViewUtil.createNarrowVerticalStackView(UIScreen.main.bounds.size)
         pin1StackView.addArrangedSubview(numberLabel)
