@@ -182,6 +182,15 @@ class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
                 self.publishLog("## 電子署名")
                 self.publishLog(signature.description)
 
+                // 真正性検証
+                do {
+                    let result = try files.validate()
+                    dataDict["rc-valid"] = result.isValid
+                    self.publishLog("真正性検証結果: \(result)\n")
+                } catch {
+                    self.publishLog("\(error)")
+                }
+
                 session.alertMessage = "読み取り完了"
                 session.invalidate()
                 self.openWebView(dataDict)
