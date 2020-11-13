@@ -79,6 +79,8 @@ class EPReaderView: UIView {
         super.traitCollectionDidChange(previousTraitCollection)
         if (previousTraitCollection!.hasDifferentColorAppearance(comparedTo: traitCollection)) {
             numberField.layer.borderColor = CustomColor.textFieldBorder.cgColor
+            birthDateField.layer.borderColor = CustomColor.textFieldBorder.cgColor
+            expireDateField.layer.borderColor = CustomColor.textFieldBorder.cgColor
         }
     }
 }
