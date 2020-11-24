@@ -49,6 +49,29 @@ class CustomColor {
                             dark: createUIColor(hex: 0x8E8E93, alpha: 1.0))
     }
 
+    static var optionsMenuBackground: UIColor {
+        return dynamicColor(light: createUIColor(hex: 0xFFFFFF, alpha: 1.0),
+                            dark: createUIColor(hex: 0x323234, alpha: 1.0))
+    }
+
+    static var optionsMenuShadow: UIColor {
+        return dynamicColor(light: createUIColor(hex: 0x000000, alpha: 1.0),
+                            dark: createUIColor(hex: 0xFFFFFF, alpha: 0.0))
+    }
+
+    static var optionsMenuItemTitle: UIColor  {
+        return text
+    }
+
+    static var optionsMenuItemBackground: UIColor  {
+        return optionsMenuBackground
+    }
+
+    static var menuItemHighlightedBackground: UIColor  {
+        return dynamicColor(light: createUIColor(hex: 0xEBEBEE, alpha: 1.0),
+                            dark: createUIColor(hex: 0x48484A, alpha: 1.0))
+    }
+
     private class func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
         return UIColor { (traitCollection) -> UIColor in
             switch traitCollection.userInterfaceStyle {
