@@ -26,6 +26,7 @@
 		3E5B941D24504469005BE553 /* RCReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5B941C24504469005BE553 /* RCReaderViewController.swift */; };
 		3EA6BD162371291600529CC6 /* INReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6BD152371291600529CC6 /* INReaderView.swift */; };
 		3EA6BD1A23713FCD00529CC6 /* INReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6BD1923713FCD00529CC6 /* INReaderViewController.swift */; };
+		3EC85925256D117900D91D46 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC85924256D117900D91D46 /* CustomScrollView.swift */; };
 		3ECCFC412306AF7C00855D56 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCFC402306AF7C00855D56 /* WebViewController.swift */; };
 		FBB68B3822F4267A00042971 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3722F4267A00042971 /* AppDelegate.swift */; };
 		FBB68B3A22F4267A00042971 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB68B3922F4267A00042971 /* SceneDelegate.swift */; };
@@ -67,6 +68,7 @@
 		3E5B941C24504469005BE553 /* RCReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCReaderViewController.swift; sourceTree = "<group>"; };
 		3EA6BD152371291600529CC6 /* INReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INReaderView.swift; sourceTree = "<group>"; };
 		3EA6BD1923713FCD00529CC6 /* INReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INReaderViewController.swift; sourceTree = "<group>"; };
+		3EC85924256D117900D91D46 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		3ECCFC402306AF7C00855D56 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FB481A0C22F45ACC003865D3 /* jeidreader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jeidreader.entitlements; sourceTree = "<group>"; };
 		FBB68B3422F4267A00042971 /* jeidreader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeidreader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +124,7 @@
 				FBB68B3722F4267A00042971 /* AppDelegate.swift */,
 				3E45A3A2246555DE00681AD9 /* CustomButton.swift */,
 				3E113E7C230E8DF2001E2AEB /* CustomColor.swift */,
+				3EC85924256D117900D91D46 /* CustomScrollView.swift */,
 				3E49561A236C49DB00A61ED3 /* CustomViewController.swift */,
 				3E4A674D23693AD600B57F30 /* CustomViewUtil.swift */,
 				3E495618236BE8C200A61ED3 /* CustomWrapperView.swift */,
@@ -233,6 +236,7 @@
 				3E5A6B5323068EBE00B9D674 /* DLReaderView.swift in Sources */,
 				3E4D626425528CDC000BA6EC /* EPReaderView.swift in Sources */,
 				3EA6BD1A23713FCD00529CC6 /* INReaderViewController.swift in Sources */,
+				3EC85925256D117900D91D46 /* CustomScrollView.swift in Sources */,
 				3E4B9853256522BD00958CDA /* OptionsMenuView.swift in Sources */,
 				3EA6BD162371291600529CC6 /* INReaderView.swift in Sources */,
 				3E495619236BE8C200A61ED3 /* CustomWrapperView.swift in Sources */,
