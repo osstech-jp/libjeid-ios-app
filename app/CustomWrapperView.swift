@@ -22,7 +22,7 @@ class CustomWrapperView: UIView {
         stackView.addArrangedSubview(view)
         stackView.addArrangedSubview(logView)
 
-        scrollView = UIScrollView()
+        scrollView = CustomScrollView()
         scrollView.delaysContentTouches = false
         scrollView.addSubview(stackView)
         super.init(frame: .zero)

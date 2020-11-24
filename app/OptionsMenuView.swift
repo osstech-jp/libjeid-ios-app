@@ -26,7 +26,7 @@ class OptionsMenuView: UIView {
         stackView.addArrangedSubview(aboutButton)
 
         let cornerRadius: CGFloat = 4
-        scrollView = UIScrollView()
+        scrollView = CustomScrollView()
         scrollView.layer.cornerRadius = cornerRadius
         scrollView.delaysContentTouches = false
         scrollView.isDirectionalLockEnabled = true
