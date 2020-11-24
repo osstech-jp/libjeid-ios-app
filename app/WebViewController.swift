@@ -50,6 +50,9 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
                                         constant: paddingSize * -1).isActive = true
 
         webview.load(URLRequest(url: url))
+
+        navigationItem.rightBarButtonItem
+            = UIBarButtonItem(title: "︙", style: .done, target: self, action: #selector(pushThreeDotLeaders))
     }
 
     func webView(_ webView: WKWebView,
@@ -71,5 +74,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         } else {
             print("script is nil")
         }
+    }
+
+    @objc func pushThreeDotLeaders(sender: UIButton) {
+        let optionsMenuViewController = OptionsMenuViewController()
+        optionsMenuViewController.modalPresentationStyle = .overCurrentContext
+        self.present(optionsMenuViewController, animated: false, completion: nil)
     }
 }
