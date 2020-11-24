@@ -49,6 +49,21 @@ class CustomViewUtil: UIView {
         return button
     }
 
+    static func createMenuItem(_ size: CGSize) -> UIButton {
+        let button = CustomButton(type: .custom)
+        button.backgroundColor = CustomColor.optionsMenuItemBackground
+        button.highlightedBackgroundColor = CustomColor.menuItemHighlightedBackground
+        button.setTitleColor(CustomColor.optionsMenuItemTitle, for: .normal)
+        button.setTitleColor(CustomColor.optionsMenuItemTitle, for: .highlighted)
+        let fontSize = CGFloat(min(size.width, size.height) / SMALL_TEXT_SIZE_DENOMINATOR)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+        button.contentHorizontalAlignment = .left
+        button.contentEdgeInsets = UIEdgeInsets(top: fontSize * 0.75, left: fontSize * 0.75,
+                                                bottom: fontSize * 0.75, right: fontSize * 0.75)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+
     static func createLogView(_ size: CGSize) -> UITextView {
         let textView = UITextView()
         textView.textColor = CustomColor.text
@@ -75,6 +90,12 @@ class CustomViewUtil: UIView {
         let stackView = createVerticalStackView(size)
         let spacing = CGFloat(min(size.width, size.height) / STACK_VIEW_NARROW_SPACING_DENOMINATOR)
         stackView.spacing = spacing
+        return stackView
+    }
+
+    static func createNoSpaceVerticalStackView(_ size: CGSize) -> UIStackView {
+        let stackView = createVerticalStackView(size)
+        stackView.spacing = 0
         return stackView
     }
 
