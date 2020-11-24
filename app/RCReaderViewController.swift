@@ -24,7 +24,7 @@ class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
         numberField.delegate = self
         rcReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(rcReaderView)
+        let wrapperView = WrapperView(rcReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView

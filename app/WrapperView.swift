@@ -1,5 +1,5 @@
 //
-//  CustomWrapperView.swift
+//  WrapperView.swift
 //  libjeid-ios-app
 //
 //  Copyright © 2019-2020 Open Source Solution Technology Corporation
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomWrapperView: UIView {
+class WrapperView: UIView {
     let scrollView: UIScrollView
     let logView: UITextView
 

@@ -28,7 +28,7 @@ class DLReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
         pin2Field.delegate = self
         dlReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(dlReaderView)
+        let wrapperView = WrapperView(dlReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView

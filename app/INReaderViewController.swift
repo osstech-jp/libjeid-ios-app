@@ -24,7 +24,7 @@ class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
         pinField.delegate = self
         inReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(inReaderView)
+        let wrapperView = WrapperView(inReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView

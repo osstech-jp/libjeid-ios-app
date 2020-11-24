@@ -19,7 +19,7 @@ class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate
         pinStatusView = PinStatusView()
         pinStatusView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(pinStatusView)
+        let wrapperView = WrapperView(pinStatusView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView

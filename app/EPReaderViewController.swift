@@ -34,7 +34,7 @@ class EPReaderViewController: CustomViewController, NFCTagReaderSessionDelegate 
         
         epReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
-        let wrapperView = CustomWrapperView(epReaderView)
+        let wrapperView = WrapperView(epReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         logView = wrapperView.logView
         scrollView = wrapperView.scrollView
