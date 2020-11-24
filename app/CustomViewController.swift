@@ -27,6 +27,8 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
             logFont = logView.font
         }
         largeLogFont = CustomViewUtil.createMediumTextFont(UIScreen.main.bounds.size)
+        navigationItem.rightBarButtonItem
+            = UIBarButtonItem(title: "︙", style: .done, target: self, action: #selector(pushThreeDotLeaders))
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
@@ -148,5 +150,11 @@ class CustomViewController: UIViewController, UITextFieldDelegate {
             view = superview
         }
         return originY
+    }
+
+    @objc func pushThreeDotLeaders(sender: UIButton) {
+        let optionsMenuViewController = OptionsMenuViewController()
+        optionsMenuViewController.modalPresentationStyle = .overCurrentContext
+        self.present(optionsMenuViewController, animated: false, completion: nil)
     }
 }
