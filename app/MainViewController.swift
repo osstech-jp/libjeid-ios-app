@@ -13,8 +13,7 @@ class MainViewController: CustomViewController {
 
     override func loadView() {
         let bundleName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as! String
-        let bundleShortVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        self.title = bundleName + " " + bundleShortVersion
+        self.title = bundleName
         mainView = MainView()
         mainView.inButton.addTarget(self, action: #selector(pushInButton), for: .touchUpInside)
         mainView.dlButton.addTarget(self, action: #selector(pushDlButton), for: .touchUpInside)
