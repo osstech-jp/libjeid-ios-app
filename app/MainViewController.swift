@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: CustomViewController {
+class MainViewController: WrapperViewController {
     var mainView: MainView!
 
     override func loadView() {

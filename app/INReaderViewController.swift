@@ -10,7 +10,7 @@ import CoreNFC
 import UIKit
 import libjeid
 
-class INReaderViewController: CustomViewController, NFCTagReaderSessionDelegate {
+class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate {
     let MAX_PIN_LENGTH: Int = 4
     var inReaderView: INReaderView!
     var pinField: UITextField!

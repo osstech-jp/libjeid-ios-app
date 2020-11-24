@@ -10,7 +10,7 @@ import CoreNFC
 import UIKit
 import libjeid
 
-class EPReaderViewController: CustomViewController, NFCTagReaderSessionDelegate {
+class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate {
     let MAX_NUMBER_LENGTH: Int = 9
     let MAX_DATE_LENGTH: Int = 8
     var epReaderView: EPReaderView!

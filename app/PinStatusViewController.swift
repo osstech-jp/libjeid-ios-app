@@ -10,7 +10,7 @@ import CoreNFC
 import UIKit
 import libjeid
 
-class PinStatusViewController: CustomViewController, NFCTagReaderSessionDelegate {
+class PinStatusViewController: WrapperViewController, NFCTagReaderSessionDelegate {
     var pinStatusView: PinStatusView!
     var session: NFCTagReaderSession?
 

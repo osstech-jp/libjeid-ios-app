@@ -1,5 +1,5 @@
 //
-//  CustomViewController.swift
+//  WrapperViewController.swift
 //  libjeid-ios-app
 //
 //  Copyright © 2019 Open Source Solution Technology Corporation
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomViewController: UIViewController, UITextFieldDelegate {
+class WrapperViewController: UIViewController, UITextFieldDelegate {
     var logView: UITextView?
     var scrollView: UIScrollView?
     var activeField: UITextField?

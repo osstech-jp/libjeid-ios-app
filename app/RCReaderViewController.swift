@@ -10,7 +10,7 @@ import CoreNFC
 import UIKit
 import libjeid
 
-class RCReaderViewController: CustomViewController, NFCTagReaderSessionDelegate {
+class RCReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate {
     let MAX_NUMBER_LENGTH: Int = 12
     var rcReaderView: RCReaderView!
     var numberField: UITextField!
