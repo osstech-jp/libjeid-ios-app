@@ -13,8 +13,8 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
     var scrollView: UIScrollView?
     var activeField: UITextField?
     private var previousKeyboardHeight: CGFloat = CGFloat(0)
-    private var previousScreenSize: CGSize!
-    private var textFieldIsEditing: Bool = false
+    private var previousViewSize: CGSize?
+    private var hasResized: Bool = false
     private var logFont: UIFont?
     private var largeLogFont: UIFont?
 
@@ -31,14 +31,13 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
             = UIBarButtonItem(title: "︙", style: .done, target: self, action: #selector(pushThreeDotLeaders))
     }
 
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        textFieldIsEditing = false
-        return true
-    }
-
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeField = textField
-        textFieldIsEditing = true
+        hasResized = false
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        return true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +46,9 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
         notificationCenter.addObserver(self,
                                        selector: #selector(keyboardWillShow(_:)),
                                        name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self,
+                                       selector: #selector(keyboardDidShow(_:)),
+                                       name: UIResponder.keyboardDidShowNotification, object: nil)
         notificationCenter.addObserver(self,
                                        selector: #selector(keyboardWillHide(_:)),
                                        name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -60,40 +62,41 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
 
     @objc func keyboardWillShow(_ notification: Notification?) {
         print("keyboardWillShow")
-        let keyboardFrameEnd = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        let boundsSize = UIScreen.main.bounds.size
+        if hasResized {
+            return
+        }
+        let keyboardHeight = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
+        resizeScrollView(keyboardHeight)
+        hasResized = true
+        previousKeyboardHeight = keyboardHeight
+        previousViewSize = view.bounds.size
+    }
 
-        if let activeField = activeField,
-            let scrollView = self.scrollView {
-            let fieldBottom = (scrollView.frame.origin.y + getActiveFieldOriginY(activeField) - scrollView.contentOffset.y)
-                + activeField.frame.height + activeField.frame.height * 0.5
-            let keyboardTop = boundsSize.height - keyboardFrameEnd.size.height
-            let keyboardHeight = keyboardFrameEnd.size.height
-            if fieldBottom >= keyboardTop {
-                scrollView.contentOffset.y += fieldBottom - keyboardTop
-            }
-            scrollView.contentSize.height += keyboardHeight - previousKeyboardHeight
+    @objc func keyboardDidShow(_ notification: Notification?) {
+        print("keyboardDidShow")
+        let keyboardHeight = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
+        if keyboardHeight != previousKeyboardHeight {
+            // keyboardWillShowの時点でキーボードの高さが正常に取得できなかった場合、ここで再度リサイズする
+            resizeScrollView(keyboardHeight)
+            hasResized = true
             previousKeyboardHeight = keyboardHeight
-            previousScreenSize = self.view.bounds.size
+            previousViewSize = view.bounds.size
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification?) {
         print("keyboardWillHide")
-        if textFieldIsEditing {
-            previousKeyboardHeight = CGFloat(0)
-            return
-        }
-        if let _ = activeField,
-            let scrollView = self.scrollView {
-            let keyboardFrameEnd = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-            let keyboardHeight = keyboardFrameEnd.size.height
-            if (self.view.bounds.size.equalTo(previousScreenSize)) {
-                scrollView.contentSize.height -= keyboardHeight
+        if let previousViewSize = self.previousViewSize {
+            if !self.view.bounds.size.equalTo(previousViewSize) {
+                hasResized = false
             }
-            previousKeyboardHeight = CGFloat(0)
-            activeField = nil
         }
+        if hasResized {
+            let keyboardHeight = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
+            undoResizing(keyboardHeight)
+            hasResized = false
+        }
+        previousKeyboardHeight = 0
     }
 
     func clearPublishedLog() {
@@ -136,6 +139,26 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
             }
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    private func resizeScrollView(_ keyboardHeight: CGFloat) {
+        if let activeField = activeField,
+            let scrollView = self.scrollView {
+            let fieldBottom = (scrollView.frame.origin.y + getActiveFieldOriginY(activeField) - scrollView.contentOffset.y)
+                + activeField.frame.height
+            let margin = activeField.frame.height * 0.5
+            let keyboardTop = UIScreen.main.bounds.size.height - keyboardHeight
+            if fieldBottom + margin >= keyboardTop {
+                scrollView.contentOffset.y += fieldBottom + margin - keyboardTop
+            }
+            scrollView.contentSize.height += keyboardHeight - previousKeyboardHeight
+        }
+    }
+
+    private func undoResizing(_ keyboardHeight: CGFloat) {
+        if let scrollView = self.scrollView {
+            scrollView.contentSize.height -= keyboardHeight
         }
     }
 
