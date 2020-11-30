@@ -23,8 +23,10 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let logView = logView {
-            logFont = logView.font
+        if let wrapperView = self.view as? WrapperView {
+            scrollView = wrapperView.scrollView
+            logView = wrapperView.logView
+            logFont = wrapperView.logView.font
         }
         largeLogFont = CustomViewUtil.createMediumTextFont(UIScreen.main.bounds.size)
         navigationItem.rightBarButtonItem
