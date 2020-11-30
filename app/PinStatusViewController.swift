@@ -21,8 +21,6 @@ class PinStatusViewController: WrapperViewController, NFCTagReaderSessionDelegat
 
         let wrapperView = WrapperView(pinStatusView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        logView = wrapperView.logView
-        scrollView = wrapperView.scrollView
         self.view = wrapperView
     }
 

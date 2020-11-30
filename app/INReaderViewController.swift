@@ -26,8 +26,6 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
 
         let wrapperView = WrapperView(inReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        logView = wrapperView.logView
-        scrollView = wrapperView.scrollView
         self.view = wrapperView
     }
 

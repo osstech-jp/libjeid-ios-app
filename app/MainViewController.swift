@@ -22,7 +22,6 @@ class MainViewController: WrapperViewController {
         mainView.pinButton.addTarget(self, action: #selector(pushPinButton), for: .touchUpInside)
 
         let wrapperView = WrapperView(mainView)
-        scrollView = wrapperView.scrollView
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         wrapperView.logView.isHidden = true
         self.view = wrapperView

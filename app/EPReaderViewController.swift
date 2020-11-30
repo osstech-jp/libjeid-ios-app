@@ -31,13 +31,10 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
         birthDateField.delegate = self
         expireDateField = epReaderView.expireDateField
         expireDateField.delegate = self
-        
         epReaderView.startButton.addTarget(self, action: #selector(pushStartButton), for: .touchUpInside)
 
         let wrapperView = WrapperView(epReaderView)
         wrapperView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        logView = wrapperView.logView
-        scrollView = wrapperView.scrollView
         self.view = wrapperView
     }
 
