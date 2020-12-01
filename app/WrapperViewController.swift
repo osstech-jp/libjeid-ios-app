@@ -63,7 +63,6 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func keyboardWillShow(_ notification: Notification?) {
-        print("keyboardWillShow")
         if hasResized {
             return
         }
@@ -75,7 +74,6 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func keyboardDidShow(_ notification: Notification?) {
-        print("keyboardDidShow")
         let keyboardHeight = (notification?.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size.height
         if keyboardHeight != previousKeyboardHeight {
             // keyboardWillShowの時点でキーボードの高さが正常に取得できなかった場合、ここで再度リサイズする
@@ -87,7 +85,6 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func keyboardWillHide(_ notification: Notification?) {
-        print("keyboardWillHide")
         if let previousViewSize = self.previousViewSize {
             if !self.view.bounds.size.equalTo(previousViewSize) {
                 hasResized = false
