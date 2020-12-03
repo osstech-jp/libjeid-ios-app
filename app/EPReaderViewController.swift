@@ -203,7 +203,7 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     dataDict["ep-nationality"] = dg1Mrz.nationality
                     dataDict["ep-date-of-birth"] = dg1Mrz.birthDate
                     dataDict["ep-sex"] = dg1Mrz.sex
-                    dataDict["ep-date-of-expirity"] = dg1Mrz.expirationDate
+                    dataDict["ep-date-of-expiry"] = dg1Mrz.expirationDate
                     dataDict["ep-mrz"] = dg1Mrz.mrz
                 }
 
