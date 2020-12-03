@@ -177,6 +177,9 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
     @objc func pushThreeDotLeaders(sender: UIButton) {
         let optionsMenuViewController = OptionsMenuViewController()
         optionsMenuViewController.modalPresentationStyle = .overCurrentContext
+        optionsMenuViewController.closeHandler = { viewController in
+            viewController.dismiss(animated: false, completion: nil)
+        }
         self.present(optionsMenuViewController, animated: false, completion: nil)
     }
 }

@@ -11,6 +11,7 @@ import libjeid
 
 class OptionsMenuViewController: UIViewController {
     var optionsMenuView: OptionsMenuView!
+    var closeHandler: ((_ viewController: UIViewController) -> Void)?
 
     override func loadView() {
         self.title = "オプションメニュー"
@@ -37,8 +38,9 @@ class OptionsMenuViewController: UIViewController {
         }
     }
 
-    @objc func pushAboutButton(sender: UIButton){
+    @objc func pushAboutButton(sender: UIButton) {
         let bundleShortVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        self.optionsMenuView.rightView.isHidden = true
         self.openAlertView("IDリーダー \(bundleShortVersion)",
                            "libjeid: \(BuildConfig.VERSION_NAME)\n" +
                             "Powerd by OSSTech")
@@ -71,7 +73,9 @@ class OptionsMenuViewController: UIViewController {
         DispatchQueue.main.async {
             let alertController: UIAlertController
                 = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.closeHandler?(self)
+            })
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
         }
