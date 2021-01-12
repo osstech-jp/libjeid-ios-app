@@ -12,6 +12,7 @@ import libjeid
 
 class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate {
     let MAX_PIN_LENGTH: Int = 4
+    let DPIN = "****"
     var dlReaderView: DLReaderView!
     var pin1Field: UITextField!
     var pin2Field: UITextField!
@@ -113,23 +114,31 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 print("thread: \(Thread.current)")
                 let ap = try reader.selectDL()
 
-                // PINを入力せず共通データを読み出す場合は、
+                // PINを入力せず共通データ要素を読み出す場合は、
                 // DriverLicenseAP.readCommonData()を利用できます
-                // 通常はPINを入力した後、
-                // DriverLicenseAP.readFiles()ですべてを読み出した後に
-                // DriverLicenseFiles.getCommonData()を利用してください
-                session.alertMessage = "\(msgReadingHeader)共通データ要素..."
-                let commonData = try ap.readCommonData()
+                // PIN1を入力せずにDriverLicenseAP.readFiles()を実行した場合、
+                // 共通データ要素と暗証番号(PIN)設定のみが読み出されます
+                session.alertMessage = "\(msgReadingHeader)共通データ要素と暗証番号(PIN)設定..."
+                let freeFiles = try ap.readFiles()
                 session.alertMessage += "成功"
+                let commonData = try freeFiles.getCommonData()
+                let pinSetting = try freeFiles.getPinSetting()
                 print(commonData.description)
+                print(pinSetting.description)
                 self.publishLog("## 共通データ要素")
                 self.publishLog(commonData.description)
+                self.publishLog("## 暗証番号(PIN)設定")
+                self.publishLog(pinSetting.description)
                 if (self.pin1 == nil || self.pin1!.isEmpty) {
                     self.publishLog("暗証番号1を入力してください")
                     session.invalidate(errorMessage: "\(msgErrorHeader)暗証番号1が入力されていません")
                     return
                 }
                 do {
+                    if !pinSetting.isTrue {
+                        self.publishLog("暗証番号(PIN)設定がfalseのため、デフォルトPINの「****」を暗証番号として使用します\n")
+                        self.pin1 = self.DPIN
+                    }
                     session.alertMessage = "\(msgReadingHeader)暗証番号1による認証..."
                     self.publishLog("## 暗証番号1による認証")
                     try ap.verifyPin1(self.pin1!)
@@ -149,6 +158,9 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
 
                 if (self.pin2 != nil && !self.pin2!.isEmpty) {
                     do {
+                        if !pinSetting.isTrue {
+                            self.pin2 = self.DPIN
+                        }
                         session.alertMessage = "\(msgReadingHeader)暗証番号2による認証..."
                         self.publishLog("## 暗証番号2による認証")
                         try ap.verifyPin2(self.pin2!)
@@ -168,6 +180,9 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 }
 
                 session.alertMessage = "\(msgReadingHeader)ファイルの読み出し..."
+                // PINを入力した後、DriverLicenseAP.readFiles()を実行すると、
+                // 入力されたPINで読み出し可能なファイルがすべて読み出されます
+                // PIN1のみを入力した場合、読み出すのにPIN2の入力が必要なファイルは読み出されません
                 let files = try ap.readFiles()
                 session.alertMessage += "成功"
                 let entries = try files.getEntries()
