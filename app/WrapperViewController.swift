@@ -134,7 +134,7 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
             let alertController: UIAlertController
                 = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                print("alert closed")
+                // do nothing
             }
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)

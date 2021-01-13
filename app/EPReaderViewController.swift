@@ -39,7 +39,6 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
     }
 
     @objc func pushStartButton(sender: UIButton){
-        print("startButton pushed")
         self.number = self.numberField!.text
         self.birthDate = self.birthDateField!.text
         self.expireDate = self.expireDateField!.text
@@ -139,7 +138,6 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 }
                 let birthDate = self.birthDate!
                 if (birthDate.count != self.MAX_DATE_LENGTH) {
-                    print(self.birthDate!.count)
                     self.publishLog("生年月日が8桁ではありません")
                     session.invalidate(errorMessage: "\(msgErrorHeader)生年月日が8桁ではありません")
                     return

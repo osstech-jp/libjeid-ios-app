@@ -30,7 +30,6 @@ class RCReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
     }
 
     @objc func pushStartButton(sender: UIButton){
-        print("startButton pushed")
         self.number = self.numberField!.text
         if let activeField = self.activeField {
             activeField.resignFirstResponder()

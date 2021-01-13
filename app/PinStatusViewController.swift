@@ -25,7 +25,6 @@ class PinStatusViewController: WrapperViewController, NFCTagReaderSessionDelegat
     }
 
     @objc func pushStartButton(sender: UIButton){
-        print("startButton pushed")
         if let activeField = self.activeField {
             activeField.resignFirstResponder()
         }
