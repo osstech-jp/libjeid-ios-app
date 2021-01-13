@@ -35,7 +35,6 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
     }
 
     @objc func pushStartButton(sender: UIButton){
-        print("startButton pushed")
         self.pin1 = self.pin1Field!.text
         self.pin2 = self.pin2Field!.text
         if let activeField = self.activeField {
@@ -123,8 +122,6 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 session.alertMessage += "成功"
                 let commonData = try freeFiles.getCommonData()
                 let pinSetting = try freeFiles.getPinSetting()
-                print(commonData.description)
-                print(pinSetting.description)
                 self.publishLog("## 共通データ要素")
                 self.publishLog(commonData.description)
                 self.publishLog("## 暗証番号(PIN)設定")
