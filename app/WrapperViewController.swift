@@ -133,9 +133,7 @@ class WrapperViewController: UIViewController, UITextFieldDelegate {
         DispatchQueue.main.async {
             let alertController: UIAlertController
                 = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default) { action in
-                // do nothing
-            }
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(okAction)
             self.present(alertController, animated: true, completion: nil)
         }
