@@ -247,8 +247,8 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 webViewController.title = "パスポートビューアー"
                 self.navigationController?.pushViewController(webViewController, animated: true)
             } catch (let error) {
-                print(error)
-                return
+                self.publishLog("\(error)")
+                self.openAlertView("エラー", "読み取り結果の表示に失敗しました")
             }
         }
     }

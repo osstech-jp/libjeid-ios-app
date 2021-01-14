@@ -70,9 +70,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let script = script {
-            webview.evaluateJavaScript(script, completionHandler: nil)
-        } else {
-            print("script is nil")
+            webview.evaluateJavaScript(script) { (_, error) in
+                if let error = error {
+                    print("evaluateJavaScript failed: \(error)")
+                }
+            }
         }
     }
 

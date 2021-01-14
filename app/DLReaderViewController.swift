@@ -360,8 +360,8 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 webViewController.title = "運転免許証ビューア"
                 self.navigationController?.pushViewController(webViewController, animated: true)
             } catch (let error) {
-                print(error)
-                return
+                self.publishLog("\(error)")
+                self.openAlertView("エラー", "読み取り結果の表示に失敗しました")
             }
         }
     }
@@ -370,7 +370,7 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
         let title: String
         let message: String
         guard case .invalidPin(let counter) = jeidError else {
-            print("unexpected case")
+            print("unexpected error: \(jeidError)")
             return
         }
         if (jeidError.isBlocked!) {

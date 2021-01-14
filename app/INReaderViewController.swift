@@ -232,8 +232,8 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 webViewController.title = "マイナンバーカードビューア"
                 self.navigationController?.pushViewController(webViewController, animated: true)
             } catch (let error) {
-                print(error)
-                return
+                self.publishLog("\(error)")
+                self.openAlertView("エラー", "読み取り結果の表示に失敗しました")
             }
         }
     }
@@ -242,7 +242,7 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
         let title: String
         let message: String
         guard case .invalidPin(let counter) = jeidError else {
-            print("unexpected case")
+            print("unexpected error: \(jeidError)")
             return
         }
         if (jeidError.isBlocked!) {
