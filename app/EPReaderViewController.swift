@@ -214,15 +214,25 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 dataDict["ep-bac-result"] = true
 
                 self.publishLog("## Passive Authentication")
-                let paResult = try files.validate()
-                dataDict["ep-pa-result"] = paResult.isValid
-                self.publishLog("検証結果: \(paResult.isValid)\n")
+                do {
+                    let paResult = try files.validate()
+                    dataDict["ep-pa-result"] = paResult.isValid
+                    self.publishLog("検証結果: \(paResult.isValid)\n")
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、EPFiles#validate()でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリはPassive Authenticationをサポートしません\n")
+                }
 
                 session.alertMessage = "\(msgReadingHeader)Active Authentication..."
                 self.publishLog("## Active Authentication")
-                let aaResult = try ap.activeAuthentication(files)
-                dataDict["ep-aa-result"] = aaResult
-                self.publishLog("検証結果: \(aaResult)\n")
+                do {
+                    let aaResult = try ap.activeAuthentication(files)
+                    dataDict["ep-aa-result"] = aaResult
+                    self.publishLog("検証結果: \(aaResult)\n")
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、PassportAP#activeAuthentication(_:)でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリはActive Authenticationをサポートしません\n")
+                }
 
                 session.alertMessage = "読み取り完了"
                 session.invalidate()

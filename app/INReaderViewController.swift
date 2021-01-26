@@ -133,13 +133,18 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 session.alertMessage = "\(msgReadingHeader)券面入力補助AP内の情報..."
                 let textFiles = try textAp.readFiles()
                 session.alertMessage += "成功"
-                let textMyNumber = try textFiles.getMyNumber()
-                self.publishLog("### 個人番号")
-                self.publishLog(textMyNumber.description)
 
                 var dataDict = Dictionary<String, Any>()
-                if let myNumber = textMyNumber.myNumber {
-                    dataDict["cardinfo-mynumber"] = myNumber
+                self.publishLog("### 個人番号")
+                do {
+                    let textMyNumber = try textFiles.getMyNumber()
+                    self.publishLog(textMyNumber.description)
+                    if let myNumber = textMyNumber.myNumber {
+                        dataDict["cardinfo-mynumber"] = myNumber
+                    }
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、INTextFiles#getMyNumber()でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリは個人番号の取得をサポートしません\n")
                 }
 
                 let textAttrs = try textFiles.getAttributes()
@@ -159,9 +164,14 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 }
 
                 self.publishLog("### 券面入力補助APの真正性検証")
-                let textApValidationResult = try textFiles.validate()
-                self.publishLog(textApValidationResult.description + "\n")
-                dataDict["textap-validation-result"] = textApValidationResult.isValid
+                do {
+                    let textApValidationResult = try textFiles.validate()
+                    self.publishLog(textApValidationResult.description + "\n")
+                    dataDict["textap-validation-result"] = textApValidationResult.isValid
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、INTextFiles#validate()でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリは真正性検証をサポートしません\n")
+                }
 
                 self.publishLog("## 券面APから情報を取得します")
                 let visualAp = try reader.selectINVisual()
@@ -198,16 +208,25 @@ class INReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     dataDict["cardinfo-photo"] = src
                 }
 
-                let visualMyNumber = try visualFiles.getMyNumber()
-                if let myNumberImage = visualMyNumber.myNumber {
-                    let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
-                    dataDict["cardinfo-mynumber-image"] = src
+                do {
+                    let visualMyNumber = try visualFiles.getMyNumber()
+                    if let myNumberImage = visualMyNumber.myNumber {
+                        let src = "data:image/png;base64,\(myNumberImage.base64EncodedString())"
+                        dataDict["cardinfo-mynumber-image"] = src
+                    }
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、INVisualFiles#getMyNumber()でJeidError.unsupportedOperationが返ります
                 }
 
                 self.publishLog("### 券面APの真正性検証")
-                let visualApValidationResult = try visualFiles.validate()
-                self.publishLog(visualApValidationResult.description + "\n")
-                dataDict["visualap-validation-result"] = visualApValidationResult.isValid
+                do {
+                    let visualApValidationResult = try visualFiles.validate()
+                    self.publishLog(visualApValidationResult.description + "\n")
+                    dataDict["visualap-validation-result"] = visualApValidationResult.isValid
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、INVisualFiles#validate()でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリは真正性検証をサポートしません\n")
+                }
 
                 session.alertMessage = "読み取り完了"
                 session.invalidate()

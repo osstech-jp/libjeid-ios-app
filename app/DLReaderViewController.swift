@@ -328,6 +328,9 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                         let result = try files.validate()
                         dataDict["dl-verified"] = result.isValid
                         self.publishLog("署名検証: \(result.isValid)\n")
+                    } catch JeidError.unsupportedOperation {
+                        // 無償版の場合、DLFiles#validate()でJeidError.unsupportedOperationが返ります
+                        self.publishLog("無償版ライブラリは真正性検証をサポートしません\n")
                     } catch {
                         self.publishLog("\(error)")
                     }

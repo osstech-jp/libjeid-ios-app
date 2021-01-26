@@ -184,6 +184,9 @@ class RCReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     let result = try files.validate()
                     dataDict["rc-valid"] = result.isValid
                     self.publishLog("真正性検証結果: \(result)\n")
+                } catch JeidError.unsupportedOperation {
+                    // 無償版の場合、RCFiles#validate()でJeidError.unsupportedOperationが返ります
+                    self.publishLog("無償版ライブラリは真正性検証をサポートしません\n")
                 } catch {
                     self.publishLog("\(error)")
                 }
