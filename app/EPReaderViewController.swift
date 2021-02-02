@@ -229,9 +229,18 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     let aaResult = try ap.activeAuthentication(files)
                     dataDict["ep-aa-result"] = aaResult
                     self.publishLog("検証結果: \(aaResult)\n")
-                } catch JeidError.unsupportedOperation {
-                    // 無償版の場合、PassportAP#activeAuthentication(_:)でJeidError.unsupportedOperationが返ります
-                    self.publishLog("無償版ライブラリはActive Authenticationをサポートしません\n")
+                } catch let jeidError as JeidError {
+                    switch jeidError {
+                    case .unsupportedOperation:
+                        // 無償版の場合、PassportAP#activeAuthentication(_:)でJeidError.unsupportedOperationが返ります
+                        self.publishLog("無償版ライブラリはActive Authenticationをサポートしません\n")
+                    case .fileNotFound:
+                        self.publishLog("Active Authenticationに非対応なパスポートです\n")
+                    case .transceiveFailed:
+                        throw jeidError
+                    default:
+                        self.publishLog("Active Authenticationで不明なエラーが発生しました: \(jeidError)\n")
+                    }
                 }
 
                 session.alertMessage = "読み取り完了"
