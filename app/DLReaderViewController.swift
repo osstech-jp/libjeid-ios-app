@@ -132,7 +132,7 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     return
                 }
                 do {
-                    if !pinSetting.isTrue {
+                    if !pinSetting.isPinSet {
                         self.publishLog("暗証番号(PIN)設定がfalseのため、デフォルトPINの「****」を暗証番号として使用します\n")
                         self.pin1 = self.DPIN
                     }
@@ -155,7 +155,7 @@ class DLReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
 
                 if (self.pin2 != nil && !self.pin2!.isEmpty) {
                     do {
-                        if !pinSetting.isTrue {
+                        if !pinSetting.isPinSet {
                             self.pin2 = self.DPIN
                         }
                         session.alertMessage = "\(msgReadingHeader)暗証番号2による認証..."
