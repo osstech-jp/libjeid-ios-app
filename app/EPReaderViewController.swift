@@ -177,6 +177,8 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 session.alertMessage = "\(msgReadingHeader)ファイルの読み出し..."
                 let files = try ap.readFiles()
                 session.alertMessage += "成功"
+                self.publishLog("## 読み取りに成功したファイル")
+                self.publishLog("\(files)\n")
 
                 var dataDict = Dictionary<String, Any>()
                 let commonData = try files.getCommonData()
