@@ -186,15 +186,12 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                 self.publishLog(commonData.description)
 
                 let dg1 = try files.getDataGroup1()
+                var issuingCountry: String? = nil
                 self.publishLog("## Data Group1")
                 if let mrz = dg1.mrz {
                     self.publishLog("\(mrz)\n")
                     let dg1Mrz = try EPMRZ(mrz)
-                    if "JPN" != dg1Mrz.issuingCountry {
-                        session.invalidate(errorMessage: "\(msgErrorHeader)日本発行のパスポートではありません")
-                        self.publishLog("日本発行のパスポートではありません")
-                        return
-                    }
+                    issuingCountry = dg1Mrz.issuingCountry
                     dataDict["ep-type"] = dg1Mrz.documentCode
                     dataDict["ep-issuing-country"] = dg1Mrz.issuingCountry
                     dataDict["ep-passport-number"] = dg1Mrz.passportNumber
@@ -243,6 +240,12 @@ class EPReaderViewController: WrapperViewController, NFCTagReaderSessionDelegate
                     default:
                         self.publishLog("Active Authenticationで不明なエラーが発生しました: \(jeidError)\n")
                     }
+                }
+
+                if "JPN" != issuingCountry {
+                    session.invalidate(errorMessage: "\(msgErrorHeader)日本発行のパスポートではありません")
+                    self.publishLog("日本発行のパスポートではありません")
+                    return
                 }
 
                 session.alertMessage = "読み取り完了"
